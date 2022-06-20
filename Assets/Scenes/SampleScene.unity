@@ -628,8 +628,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 10
-  StrafeSpeed: 7
-  _maxXPosition: 1.84
+  _maxXPosition: 1.5
+  _strafeDuration: 0.15
 --- !u!1 &1564122214
 GameObject:
   m_ObjectHideFlags: 0
