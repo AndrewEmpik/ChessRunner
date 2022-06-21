@@ -8,7 +8,7 @@ public class PlayerMove : MonoBehaviour
 	//int _screenSizeY;
 	public float Speed = 10f;
 	//public float StrafeSpeed = 1f;
-	[SerializeField] float _maxXPosition = 1.84f;
+	[SerializeField] float _maxXPosition = 2f;
 	[SerializeField] float _strafeDuration = 0.25f;
 
 	private Vector2 _startTapPosition;
@@ -27,7 +27,7 @@ public class PlayerMove : MonoBehaviour
 	void StrafeRight()
 	{
 		Debug.Log("StrafeRight");
-		if (_curPositionNumber >= 1)
+		if (_curPositionNumber >= 2)
 		{
 			return; // можно в будущем сделать сход с трассы
 		}
@@ -37,7 +37,7 @@ public class PlayerMove : MonoBehaviour
 	void StrafeLeft()
 	{
 		Debug.Log("StrafeLeft");
-		if (_curPositionNumber <= -1)
+		if (_curPositionNumber <= -2)
 		{
 			return; // можно в будущем сделать сход с трассы
 		}
@@ -55,14 +55,15 @@ public class PlayerMove : MonoBehaviour
 			transform.position = new Vector3(Mathf.Lerp(startPosition, endPosition, t/ _strafeDuration), transform.position.y, transform.position.z);
 			yield return null;
 		}
+		transform.position = new Vector3(endPosition, transform.position.y, transform.position.z);
 		_curPositionNumber = newPositionNumber;
 		_freeToAct = true;
 	}
 
 	float GetXByPositionNumber(int positionNumber)
 	{
-		positionNumber = Mathf.Clamp(positionNumber, -1, 1);
-		return _maxXPosition * positionNumber;
+		positionNumber = Mathf.Clamp(positionNumber, -2, 2);
+		return (_maxXPosition/2) * positionNumber;
 	}
 
 	void Jump()
