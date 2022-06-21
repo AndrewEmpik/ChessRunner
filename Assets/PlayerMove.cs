@@ -122,5 +122,22 @@ public class PlayerMove : MonoBehaviour
 		if (transform.position.z > 42.7f)
 		transform.position = new Vector3(transform.position.x, transform.position.y, -7.3f);
 
+
+		// переместить потом в куда-нибудь типа менеджера меню
+		if (Input.GetKey(KeyCode.Escape))
+		{
+			QuitGame();
+		}
 	}
+
+
+	public void QuitGame()
+	{
+#if UNITY_EDITOR
+		UnityEditor.EditorApplication.isPlaying = false;
+#else
+			Application.Quit(); 
+#endif
+	}
+
 }
