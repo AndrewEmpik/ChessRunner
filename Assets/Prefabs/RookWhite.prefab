@@ -176,7 +176,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6985447752985504955}
   m_Layer: 0
-  m_Name: Rook
+  m_Name: RookWhite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
