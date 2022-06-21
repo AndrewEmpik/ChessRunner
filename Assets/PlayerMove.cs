@@ -131,6 +131,15 @@ public class PlayerMove : MonoBehaviour
 		}
 	}
 
+	// потом переместить
+	private float _fps;
+	[SerializeField] GUIStyle style;
+	void OnGUI()
+	{
+		//float newFPS = 1.0f / Time.smoothDeltaTime;
+		_fps = 1.0f / Time.smoothDeltaTime;  //Mathf.Lerp(fps, newFPS, 0.0005f);
+		GUI.Label(new Rect(10, 10, 100, 100), "FPS: " + ((int)_fps).ToString(),style);
+	}
 
 	public void QuitGame()
 	{
