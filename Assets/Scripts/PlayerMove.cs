@@ -15,6 +15,7 @@ public class PlayerMove : MonoBehaviour
 	[SerializeField] float _strafeDuration = 0.25f;
 	[SerializeField] float _thresholdForShortTap = 70f;
 
+	private Management _management;
 
 	private Vector2 _startTapPosition;
 	private Vector2 _tapOffset;
@@ -33,6 +34,8 @@ public class PlayerMove : MonoBehaviour
 		_screenCoefficient = (float)_screenSizeX / _targetScreenSizeX;
 		_thresholdForShortTap = _thresholdForShortTap * _screenCoefficient;
 
+		_management = FindObjectOfType<Management>();
+
 		//_screenSizeY = Screen.height;
 #if UNITY_EDITOR
 		style.fontSize = (int)(style.fontSize / 2.5f);
@@ -41,7 +44,9 @@ public class PlayerMove : MonoBehaviour
 
 	void OnGUI()
 	{
-		GUI.Label(new Rect(_screenCenterX, 10, 100, 100), "dbg: " + _tapOffset.magnitude.ToString() + " (" + _thresholdForShortTap.ToString("0") + ")", style);
+		Vector2Int cell = _management.GetCellAddressByPosition(transform.position.x, transform.position.z);
+		GUI.Label(new Rect(_screenCenterX, 10, 100, 100), "dbg: " + _tapOffset.magnitude.ToString() + " (" + _thresholdForShortTap.ToString("0") + ")" + "\n" +
+															"cell: " + cell.x + "," + cell.y, style);
 	}
 
 	void Update()
