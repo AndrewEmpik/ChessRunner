@@ -75,13 +75,9 @@ public class PlayerMove : MonoBehaviour
 					if (Mathf.Abs(_tapOffset.x) >= Mathf.Abs(_tapOffset.y))
 					{
 						if (_tapOffset.x > 0)
-						{
 							StrafeRight();
-						}
 						else
-						{
 							StrafeLeft();
-						}
 					}
 					else
 					{
@@ -96,11 +92,20 @@ public class PlayerMove : MonoBehaviour
 					}
 				}
 			}
+
+
+#if UNITY_EDITOR
+			if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
+				StrafeLeft();
+			else if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
+				StrafeRight();
+#endif
+
 		}
 
 		// temp teleportation
-		if (transform.position.z > 42.7f)
-		transform.position = new Vector3(transform.position.x, transform.position.y, -7.3f);
+		if (transform.position.z > 50.2f)
+		transform.position = new Vector3(transform.position.x, transform.position.y, 0.2f);
 
 	}
 
