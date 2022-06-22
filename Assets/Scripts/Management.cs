@@ -50,9 +50,9 @@ public class Management : MonoBehaviour
 		return GetCellAddressByPosition(point.x, point.y);
 	}
 
-	public Vector2 GetPositionByCellAddress(Vector2Int cellAddress)
+	public Vector3 GetPositionByCellAddress(Vector2Int cellAddress)
 	{
-		return new Vector2(cellAddress.x, cellAddress.y)*CellSize + WorldZeroPoint;
+		return GetPositionByCellAddress(cellAddress.x, cellAddress.y);
 	}
 
 	public Vector3 GetPositionByCellAddress(int x, int y)

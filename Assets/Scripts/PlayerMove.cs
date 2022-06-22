@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMove : MonoBehaviour
+public class PlayerMove : ChessPiece
 {
 	int _screenSizeX;
 	int _screenCenterX;
@@ -14,6 +14,13 @@ public class PlayerMove : MonoBehaviour
 	[SerializeField] float _maxXPosition = 2f;
 	[SerializeField] float _strafeDuration = 0.25f;
 	[SerializeField] float _thresholdForShortTap = 70f;
+
+	[SerializeField] GameObject _pawnMesh;
+	[SerializeField] GameObject _knightMesh;
+	[SerializeField] GameObject _bishopMesh;
+	[SerializeField] GameObject _rookMesh;
+	[SerializeField] GameObject _queenMesh;
+	[SerializeField] GameObject _kingMesh;
 
 	private Management _management;
 
@@ -30,8 +37,10 @@ public class PlayerMove : MonoBehaviour
 
 	public List<GameObject> PlayerHitCursorList = new List<GameObject>();
 
-	void Start()
+	public override void Start()
     {
+		base.Start();
+
 		_screenSizeX = Screen.width;
 		_screenCenterX = _screenSizeX / 2;
 
@@ -40,10 +49,10 @@ public class PlayerMove : MonoBehaviour
 
 		_management = FindObjectOfType<Management>();
 
-		GameObject C = Instantiate(PlayerHitCursorPrefab);
-		PlayerHitCursorList.Add(C);
-		C = Instantiate(PlayerHitCursorPrefab);
-		PlayerHitCursorList.Add(C);
+		for (int i=0; i<HitCursorPrototypes.Count; i++)
+		{
+			PlayerHitCursorList.Add(Instantiate(PlayerHitCursorPrefab));
+		}
 
 		//_screenSizeY = Screen.height;
 #if UNITY_EDITOR
@@ -114,6 +123,19 @@ public class PlayerMove : MonoBehaviour
 				StrafeLeft();
 			else if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
 				StrafeRight();
+
+			if (Input.GetKey(KeyCode.Alpha1))
+				ChangePieceType(PieceType.Pawn);
+			if (Input.GetKey(KeyCode.Alpha2))
+				ChangePieceType(PieceType.Knight);
+			if (Input.GetKey(KeyCode.Alpha3))
+				ChangePieceType(PieceType.Bishop);
+			if (Input.GetKey(KeyCode.Alpha4))
+				ChangePieceType(PieceType.Rook);
+			if (Input.GetKey(KeyCode.Alpha5))
+				ChangePieceType(PieceType.Queen);
+			if (Input.GetKey(KeyCode.Alpha0))
+				ChangePieceType(PieceType.King);
 #endif
 
 		}
@@ -127,22 +149,63 @@ public class PlayerMove : MonoBehaviour
 	void PlaceHitCursors()
 	{
 		Vector2Int playerCellAddress = _management.GetCellAddressByPosition(transform.position.x, transform.position.z);
-		// костыли, потом переделать
-		if (playerCellAddress.x >= -1) 
-		{
-			PlayerHitCursorList[0].SetActive(true);
-			PlayerHitCursorList[0].transform.position = _management.GetPositionByCellAddress(playerCellAddress.x - 1, playerCellAddress.y + 1);
-		}
-		else
-			PlayerHitCursorList[0].SetActive(false);
+		Vector2Int newHitCursorCoords;
 
-		if (playerCellAddress.x <= 1)
+		for (int i = 0; i < PlayerHitCursorList.Count; i++)
 		{
-			PlayerHitCursorList[1].SetActive(true);
-			PlayerHitCursorList[1].transform.position = _management.GetPositionByCellAddress(playerCellAddress.x + 1, playerCellAddress.y + 1);
+			newHitCursorCoords = playerCellAddress + HitCursorPrototypes[i];
+
+			if (Mathf.Abs(newHitCursorCoords.x) <= 2) // radius вставить
+			{
+				PlayerHitCursorList[i].SetActive(true);
+				PlayerHitCursorList[i].transform.position = _management.GetPositionByCellAddress(newHitCursorCoords);
+			}
+			else
+				PlayerHitCursorList[i].SetActive(false);
 		}
-		else
-			PlayerHitCursorList[1].SetActive(false);
+	}
+
+	public override void ChangePieceType(PieceType type)
+	{
+		base.ChangePieceType(type);
+
+		_pawnMesh.SetActive(false);
+		_knightMesh.SetActive(false);
+		_bishopMesh.SetActive(false);
+		_rookMesh.SetActive(false);
+		_queenMesh.SetActive(false);
+		_kingMesh.SetActive(false);
+
+		switch (type)
+		{
+			case PieceType.Pawn:
+				_pawnMesh.SetActive(true);
+				break;
+			case PieceType.Knight:
+				_knightMesh.SetActive(true);
+				break;
+			case PieceType.Bishop:
+				_bishopMesh.SetActive(true);
+				break;
+			case PieceType.Rook:
+				_rookMesh.SetActive(true);
+				break;
+			case PieceType.Queen:
+				_queenMesh.SetActive(true);
+				break;
+			case PieceType.King:
+				_kingMesh.SetActive(true);
+				break;
+		}
+
+		foreach (GameObject C in PlayerHitCursorList)
+			Destroy(C);
+		PlayerHitCursorList.Clear();
+
+		for (int i = 0; i < HitCursorPrototypes.Count; i++)
+		{
+			PlayerHitCursorList.Add(Instantiate(PlayerHitCursorPrefab));
+		}
 	}
 
 	void StrafeRight()
