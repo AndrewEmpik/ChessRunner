@@ -9,12 +9,12 @@ public class Management : MonoBehaviour
 
 	public Vector2 WorldZeroPoint = Vector2.zero;
 	public int PathWidthInCells = 5; // пока не меняем
-	private int _pathRadius;
+	public int PathRadius;
 	public float CellSize = 1f;
 
 	void Start()
     {
-		_pathRadius = (PathWidthInCells - 1) / 2; // считаем, что PathWidthInCells нечётный
+		PathRadius = (PathWidthInCells - 1) / 2; // считаем, что PathWidthInCells нечётный
 
 #if !UNITY_EDITOR
 		Application.targetFrameRate = 60;

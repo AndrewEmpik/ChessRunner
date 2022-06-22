@@ -155,7 +155,7 @@ public class PlayerMove : ChessPiece
 		{
 			newHitCursorCoords = playerCellAddress + HitCursorPrototypes[i];
 
-			if (Mathf.Abs(newHitCursorCoords.x) <= 2) // radius вставить
+			if (Mathf.Abs(newHitCursorCoords.x) <= _management.PathRadius)
 			{
 				PlayerHitCursorList[i].SetActive(true);
 				PlayerHitCursorList[i].transform.position = _management.GetPositionByCellAddress(newHitCursorCoords);
