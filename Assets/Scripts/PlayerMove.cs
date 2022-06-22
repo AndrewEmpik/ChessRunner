@@ -20,10 +20,6 @@ public class PlayerMove : MonoBehaviour
 
 	void Start()
     {
-#if !UNITY_EDITOR
-		Application.targetFrameRate = 60;
-#endif
-
 		_screenSizeX = Screen.width;
 		//_screenSizeY = Screen.height;
 	}
@@ -123,35 +119,10 @@ public class PlayerMove : MonoBehaviour
 			}
 		}
 
-		// temp
+		// temp teleportation
 		if (transform.position.z > 42.7f)
 		transform.position = new Vector3(transform.position.x, transform.position.y, -7.3f);
 
-
-		// переместить потом в куда-нибудь типа менеджера меню
-		if (Input.GetKey(KeyCode.Escape))
-		{
-			QuitGame();
-		}
-	}
-
-	// потом переместить
-	private float _fps;
-	[SerializeField] GUIStyle style;
-	void OnGUI()
-	{
-		//float newFPS = 1.0f / Time.smoothDeltaTime;
-		_fps = 1.0f / Time.smoothDeltaTime;  //Mathf.Lerp(fps, newFPS, 0.0005f);
-		GUI.Label(new Rect(10, 10, 100, 100), "FPS: " + ((int)_fps).ToString(),style);
-	}
-
-	public void QuitGame()
-	{
-#if UNITY_EDITOR
-		UnityEditor.EditorApplication.isPlaying = false;
-#else
-			Application.Quit(); 
-#endif
 	}
 
 }
