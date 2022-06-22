@@ -26,6 +26,10 @@ public class PlayerMove : MonoBehaviour
 
 	[SerializeField] GUIStyle style;
 
+	public GameObject PlayerHitCursorPrefab;
+
+	public List<GameObject> PlayerHitCursorList = new List<GameObject>();
+
 	void Start()
     {
 		_screenSizeX = Screen.width;
@@ -35,6 +39,11 @@ public class PlayerMove : MonoBehaviour
 		_thresholdForShortTap = _thresholdForShortTap * _screenCoefficient;
 
 		_management = FindObjectOfType<Management>();
+
+		GameObject C = Instantiate(PlayerHitCursorPrefab);
+		PlayerHitCursorList.Add(C);
+		C = Instantiate(PlayerHitCursorPrefab);
+		PlayerHitCursorList.Add(C);
 
 		//_screenSizeY = Screen.height;
 #if UNITY_EDITOR
@@ -52,6 +61,7 @@ public class PlayerMove : MonoBehaviour
 	void Update()
     {
 		transform.position += Vector3.forward * Speed * Time.deltaTime;
+		PlaceHitCursors();
 
 		if (_freeToAct)
 		{
@@ -112,6 +122,27 @@ public class PlayerMove : MonoBehaviour
 		if (transform.position.z > 50.2f)
 		transform.position = new Vector3(transform.position.x, transform.position.y, 0.2f);
 
+	}
+
+	void PlaceHitCursors()
+	{
+		Vector2Int playerCellAddress = _management.GetCellAddressByPosition(transform.position.x, transform.position.z);
+		// костыли, потом переделать
+		if (playerCellAddress.x >= -1) 
+		{
+			PlayerHitCursorList[0].SetActive(true);
+			PlayerHitCursorList[0].transform.position = _management.GetPositionByCellAddress(playerCellAddress.x - 1, playerCellAddress.y + 1);
+		}
+		else
+			PlayerHitCursorList[0].SetActive(false);
+
+		if (playerCellAddress.x <= 1)
+		{
+			PlayerHitCursorList[1].SetActive(true);
+			PlayerHitCursorList[1].transform.position = _management.GetPositionByCellAddress(playerCellAddress.x + 1, playerCellAddress.y + 1);
+		}
+		else
+			PlayerHitCursorList[1].SetActive(false);
 	}
 
 	void StrafeRight()
