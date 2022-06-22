@@ -12,6 +12,10 @@ public class Management : MonoBehaviour
 #if !UNITY_EDITOR
 		Application.targetFrameRate = 60;
 #endif
+
+#if UNITY_EDITOR
+		style.fontSize = (int)(style.fontSize / 2.5f);
+#endif
 	}
 
 	void OnGUI()

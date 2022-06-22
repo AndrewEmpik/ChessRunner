@@ -5,11 +5,16 @@ using UnityEngine;
 public class PlayerMove : MonoBehaviour
 {
 	int _screenSizeX;
+	int _screenCenterX;
+	const int _targetScreenSizeX = 1080; // константа для пропорций
+	float _screenCoefficient;
 	//int _screenSizeY;
 	public float Speed = 10f;
 	//public float StrafeSpeed = 1f;
 	[SerializeField] float _maxXPosition = 2f;
 	[SerializeField] float _strafeDuration = 0.25f;
+	[SerializeField] float _thresholdForShortTap = 70f;
+
 
 	private Vector2 _startTapPosition;
 	private Vector2 _tapOffset;
@@ -18,10 +23,85 @@ public class PlayerMove : MonoBehaviour
 
 	int _curPositionNumber = 0;
 
+	[SerializeField] GUIStyle style;
+
 	void Start()
     {
 		_screenSizeX = Screen.width;
+		_screenCenterX = _screenSizeX / 2;
+
+		_screenCoefficient = (float)_screenSizeX / _targetScreenSizeX;
+		_thresholdForShortTap = _thresholdForShortTap * _screenCoefficient;
+
 		//_screenSizeY = Screen.height;
+#if UNITY_EDITOR
+		style.fontSize = (int)(style.fontSize / 2.5f);
+#endif
+	}
+
+	void OnGUI()
+	{
+		GUI.Label(new Rect(_screenCenterX, 10, 100, 100), "dbg: " + _tapOffset.magnitude.ToString() + " (" + _thresholdForShortTap.ToString("0") + ")", style);
+	}
+
+	void Update()
+    {
+		transform.position += Vector3.forward * Speed * Time.deltaTime;
+
+		if (_freeToAct)
+		{
+
+			if (Input.GetMouseButtonDown(0))
+			{
+				_startTapPosition = Input.mousePosition;
+			}
+
+			if (Input.GetMouseButtonUp(0))
+			{
+				_tapOffset = (Vector2)Input.mousePosition - _startTapPosition;
+
+
+
+				// если короткое нажатие
+				if (_tapOffset.magnitude <= _thresholdForShortTap)
+				{
+					if (Input.mousePosition.x >= _screenCenterX)
+						StrafeRight();
+					else
+						StrafeLeft();
+				}
+				else // если свайп
+				{
+					if (Mathf.Abs(_tapOffset.x) >= Mathf.Abs(_tapOffset.y))
+					{
+						if (_tapOffset.x > 0)
+						{
+							StrafeRight();
+						}
+						else
+						{
+							StrafeLeft();
+						}
+					}
+					else
+					{
+						if (_tapOffset.y > 0)
+						{
+							Jump();
+						}
+						else
+						{
+							Duck();
+						}
+					}
+				}
+			}
+		}
+
+		// temp teleportation
+		if (transform.position.z > 42.7f)
+		transform.position = new Vector3(transform.position.x, transform.position.y, -7.3f);
+
 	}
 
 	void StrafeRight()
@@ -75,54 +155,6 @@ public class PlayerMove : MonoBehaviour
 	{
 
 		Debug.Log("Duck");
-	}
-
-
-	void Update()
-    {
-		transform.position += Vector3.forward * Speed * Time.deltaTime;
-
-		if (_freeToAct)
-		{
-
-			if (Input.GetMouseButtonDown(0))
-			{
-				_startTapPosition = Input.mousePosition;
-			}
-
-			if (Input.GetMouseButtonUp(0))
-			{
-				_tapOffset = (Vector2)Input.mousePosition - _startTapPosition;
-
-				if (Mathf.Abs(_tapOffset.x) >= Mathf.Abs(_tapOffset.y))
-				{
-					if (_tapOffset.x > 0)
-					{
-						StrafeRight();
-					}
-					else
-					{
-						StrafeLeft();
-					}
-				}
-				else
-				{
-					if (_tapOffset.y > 0)
-					{
-						Jump();
-					}
-					else
-					{
-						Duck();
-					}
-				}
-			}
-		}
-
-		// temp teleportation
-		if (transform.position.z > 42.7f)
-		transform.position = new Vector3(transform.position.x, transform.position.y, -7.3f);
-
 	}
 
 }
