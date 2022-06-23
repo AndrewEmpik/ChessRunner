@@ -137,7 +137,7 @@ public class PlayerMove : ChessPiece
 		}
 
 		// temp teleportation
-		if (transform.position.z > 50.2f)
+		if (transform.position.z > 75.2f)
 		transform.position = new Vector3(transform.position.x, transform.position.y, 0.2f);
 
 	}

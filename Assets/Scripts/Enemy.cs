@@ -29,7 +29,7 @@ public class Enemy : ChessPiece
 		{
 			newHitCursorCoords = unitCellAddress + HitCursorPrototypes[i] * new Vector2Int(1,-1); // * -1 по y
 
-			Debug.Log(newHitCursorCoords.x + ", " + newHitCursorCoords.y + " (" + GlobalManagement.PathRadius + ")");
+			//Debug.Log(newHitCursorCoords.x + ", " + newHitCursorCoords.y + " (" + GlobalManagement.PathRadius + ")");
 
 			if (Mathf.Abs(newHitCursorCoords.x) <= GlobalManagement.PathRadius)
 			{
