@@ -41,8 +41,10 @@ public class Enemy : ChessPiece
 		}
 	}
 
-	void Update()
+	void OnDestroy()
     {
-        
+		foreach (GameObject C in EnemyHitCursorList)
+			Destroy(C);
+		EnemyHitCursorList.Clear();
     }
 }

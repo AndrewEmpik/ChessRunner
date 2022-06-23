@@ -35,9 +35,13 @@ public class PlayerMove : ChessPiece
 
 	public List<GameObject> PlayerHitCursorList = new List<GameObject>();
 
+	private PiecesManager _piecesManager;
+
 	public override void Start()
     {
 		base.Start();
+
+		_piecesManager = FindObjectOfType<PiecesManager>();
 
 		_screenSizeX = Screen.width;
 		_screenCenterX = _screenSizeX / 2;
@@ -103,11 +107,11 @@ public class PlayerMove : ChessPiece
 					{
 						if (_tapOffset.y > 0)
 						{
-							Jump();
+							Beat();
 						}
 						else
 						{
-							Duck();
+							SomeActionAtDucking();
 						}
 					}
 				}
@@ -119,6 +123,9 @@ public class PlayerMove : ChessPiece
 				StrafeLeft();
 			else if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
 				StrafeRight();
+
+			if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
+				Beat();
 
 			if (Input.GetKey(KeyCode.Alpha1))
 				ChangePieceType(PieceType.Pawn);
@@ -132,6 +139,7 @@ public class PlayerMove : ChessPiece
 				ChangePieceType(PieceType.Queen);
 			if (Input.GetKey(KeyCode.Alpha0))
 				ChangePieceType(PieceType.King);
+
 #endif
 
 		}
@@ -160,6 +168,30 @@ public class PlayerMove : ChessPiece
 				PlayerHitCursorList[i].SetActive(false);
 		}
 	}
+
+	Enemy FindEnemyUnderCursors()
+	{
+		for (int i = 0; i < PlayerHitCursorList.Count; i++)
+		{
+			Vector2 CursorCellAddress = GlobalManagement.GetCellAddressByPosition(PlayerHitCursorList[i].transform.position);
+			for (int j = 0; j < _piecesManager.Enemies.Count; j++)
+			{
+				if (_piecesManager.Enemies[j].transform.position.z < PlayerHitCursorList[i].transform.position.z - GlobalManagement.CellSize/2)
+					continue;
+				else if (_piecesManager.Enemies[j].transform.position.z > PlayerHitCursorList[i].transform.position.z + GlobalManagement.CellSize/2)
+					break;
+				else
+				{
+					Vector2 EnemyCellAddress = GlobalManagement.GetCellAddressByPosition(_piecesManager.Enemies[j].transform.position);
+					if (EnemyCellAddress == CursorCellAddress)
+						return _piecesManager.Enemies[j];
+				}
+			}
+		}
+
+		return null;
+	}
+
 
 	public override void ChangePieceType(PieceType type)
 	{
@@ -206,7 +238,7 @@ public class PlayerMove : ChessPiece
 
 	void StrafeRight()
 	{
-		Debug.Log("StrafeRight");
+		//Debug.Log("StrafeRight");
 		if (_curPositionNumber >= 2)
 		{
 			return; // можно в будущем сделать сход с трассы
@@ -216,7 +248,7 @@ public class PlayerMove : ChessPiece
 
 	void StrafeLeft()
 	{
-		Debug.Log("StrafeLeft");
+		//Debug.Log("StrafeLeft");
 		if (_curPositionNumber <= -2)
 		{
 			return; // можно в будущем сделать сход с трассы
@@ -246,15 +278,20 @@ public class PlayerMove : ChessPiece
 		return (_maxXPosition/2) * positionNumber;
 	}
 
-	void Jump()
+	void Beat()
 	{
-
-		Debug.Log("Jump");
+		Enemy TargetEnemy = FindEnemyUnderCursors();
+		if (TargetEnemy)
+		{
+			Debug.Log("Beat!");
+			_piecesManager.Enemies.Remove(TargetEnemy);
+			Destroy(TargetEnemy.gameObject);
+		}
 	}
-	void Duck()
-	{
 
-		Debug.Log("Duck");
+	void SomeActionAtDucking() // реализовать что-то, ну или не надо, решай там уж сам
+	{
+		Debug.Log("Duck (???)");
 	}
 
 }
