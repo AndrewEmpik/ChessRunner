@@ -256,6 +256,11 @@ public class PlayerMove : ChessPiece
 		StartCoroutine(StrafeCoroutine(_curPositionNumber - 1));
 	}
 
+	void RushAtPosition(Enemy TargetEnemy)
+	{
+		StartCoroutine(BeatRushCoroutine(TargetEnemy));
+	}
+
 	IEnumerator StrafeCoroutine(int newPositionNumber)
 	{
 		_freeToAct = false;
@@ -272,6 +277,30 @@ public class PlayerMove : ChessPiece
 		_freeToAct = true;
 	}
 
+	IEnumerator BeatRushCoroutine(Enemy TargetEnemy)
+	{
+		_freeToAct = false;
+		Vector3 startPosition = transform.position;
+
+		for (float t = 0; t < _strafeDuration; t += Time.deltaTime * 1f)
+		{
+			transform.position = new Vector3(	Mathf.Lerp(startPosition.x, TargetEnemy.transform.position.x, t / _strafeDuration), 
+												transform.position.y,
+												Mathf.Lerp(startPosition.z, TargetEnemy.transform.position.z, t / _strafeDuration) );
+			yield return null;
+		}
+		transform.position = TargetEnemy.transform.position;
+		_curPositionNumber = GlobalManagement.GetCellAddressByPosition(transform.position).x;
+
+		_piecesManager.Enemies.Remove(TargetEnemy);
+		Destroy(TargetEnemy.gameObject);
+
+		_freeToAct = true;
+	}
+
+	//IEnumerator StrafeCoroutine(int newPositionNumber)
+
+
 	float GetXByPositionNumber(int positionNumber)
 	{
 		positionNumber = Mathf.Clamp(positionNumber, -2, 2);
@@ -284,9 +313,15 @@ public class PlayerMove : ChessPiece
 		if (TargetEnemy)
 		{
 			Debug.Log("Beat!");
-			_piecesManager.Enemies.Remove(TargetEnemy);
-			Destroy(TargetEnemy.gameObject);
+			RushAtPosition(TargetEnemy);
+
+			//WaitForSeconds(1f);
+
 		}
+	}
+
+	void Empty()
+	{
 	}
 
 	void SomeActionAtDucking() // реализовать что-то, ну или не надо, решай там уж сам
