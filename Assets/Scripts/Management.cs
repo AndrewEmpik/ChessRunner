@@ -5,16 +5,12 @@ using UnityEngine;
 public class Management : MonoBehaviour
 {
 	private float _fps;
-	[SerializeField] GUIStyle style;
-
-	public Vector2 WorldZeroPoint = Vector2.zero;
-	public int PathWidthInCells = 5; // пока не меняем
-	public int PathRadius;
-	public float CellSize = 1f;
+	private GUIStyle style = new GUIStyle();
 
 	void Start()
-    {
-		PathRadius = (PathWidthInCells - 1) / 2; // считаем, что PathWidthInCells нечётный
+	{
+		style.fontSize = 32;
+		style.normal.textColor = Color.white;
 
 #if !UNITY_EDITOR
 		Application.targetFrameRate = 60;
@@ -33,40 +29,8 @@ public class Management : MonoBehaviour
 	}
 
 	void Update()
-    {
+	{
 		if (Input.GetKey(KeyCode.Escape))
-			QuitGame();
-	}
-
-	public Vector2Int GetCellAddressByPosition(float x, float y)
-	{
-		float xRelative = x - WorldZeroPoint.x;
-		int _x = (int)((Mathf.Abs(xRelative) + CellSize / 2) / CellSize * Mathf.Sign(xRelative));
-		int _y = (int)((y-WorldZeroPoint.y	+ CellSize / 2) / CellSize);
-		return new Vector2Int(_x,_y);
-	}
-	public Vector2Int GetCellAddressByPosition(Vector2 point)
-	{
-		return GetCellAddressByPosition(point.x, point.y);
-	}
-
-	public Vector3 GetPositionByCellAddress(Vector2Int cellAddress)
-	{
-		return GetPositionByCellAddress(cellAddress.x, cellAddress.y);
-	}
-
-	public Vector3 GetPositionByCellAddress(int x, int y)
-	{
-		Vector2 flatPosition = new Vector2(x, y) * CellSize + WorldZeroPoint;
-		return new Vector3(flatPosition.x, 0, flatPosition.y);
-	}
-
-	public void QuitGame()
-	{
-#if UNITY_EDITOR
-		UnityEditor.EditorApplication.isPlaying = false;
-#else
-			Application.Quit(); 
-#endif
+			GlobalManagement.QuitGame();
 	}
 }

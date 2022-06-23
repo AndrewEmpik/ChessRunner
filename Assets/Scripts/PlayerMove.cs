@@ -22,8 +22,6 @@ public class PlayerMove : ChessPiece
 	[SerializeField] GameObject _queenMesh;
 	[SerializeField] GameObject _kingMesh;
 
-	private Management _management;
-
 	private Vector2 _startTapPosition;
 	private Vector2 _tapOffset;
 
@@ -47,8 +45,6 @@ public class PlayerMove : ChessPiece
 		_screenCoefficient = (float)_screenSizeX / _targetScreenSizeX;
 		_thresholdForShortTap = _thresholdForShortTap * _screenCoefficient;
 
-		_management = FindObjectOfType<Management>();
-
 		for (int i=0; i<HitCursorPrototypes.Count; i++)
 		{
 			PlayerHitCursorList.Add(Instantiate(PlayerHitCursorPrefab));
@@ -62,7 +58,7 @@ public class PlayerMove : ChessPiece
 
 	void OnGUI()
 	{
-		Vector2Int cell = _management.GetCellAddressByPosition(transform.position.x, transform.position.z);
+		Vector2Int cell = GlobalManagement.GetCellAddressByPosition(transform.position.x, transform.position.z);
 		GUI.Label(new Rect(_screenCenterX, 10, 100, 100), "dbg: " + _tapOffset.magnitude.ToString() + " (" + _thresholdForShortTap.ToString("0") + ")" + "\n" +
 															"cell: " + cell.x + "," + cell.y, style);
 	}
@@ -148,17 +144,17 @@ public class PlayerMove : ChessPiece
 
 	void PlaceHitCursors()
 	{
-		Vector2Int playerCellAddress = _management.GetCellAddressByPosition(transform.position.x, transform.position.z);
+		Vector2Int playerCellAddress = GlobalManagement.GetCellAddressByPosition(transform.position.x, transform.position.z);
 		Vector2Int newHitCursorCoords;
 
 		for (int i = 0; i < PlayerHitCursorList.Count; i++)
 		{
 			newHitCursorCoords = playerCellAddress + HitCursorPrototypes[i];
 
-			if (Mathf.Abs(newHitCursorCoords.x) <= _management.PathRadius)
+			if (Mathf.Abs(newHitCursorCoords.x) <= GlobalManagement.PathRadius)
 			{
 				PlayerHitCursorList[i].SetActive(true);
-				PlayerHitCursorList[i].transform.position = _management.GetPositionByCellAddress(newHitCursorCoords);
+				PlayerHitCursorList[i].transform.position = GlobalManagement.GetPositionByCellAddress(newHitCursorCoords);
 			}
 			else
 				PlayerHitCursorList[i].SetActive(false);
