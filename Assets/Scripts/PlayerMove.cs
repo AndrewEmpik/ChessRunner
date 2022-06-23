@@ -236,6 +236,25 @@ public class PlayerMove : ChessPiece
 		}
 	}
 
+	public void UpgradePiece()
+	{
+		if ((int)CurrentType == 5)
+			CurrentType = (PieceType)0;
+		else
+			CurrentType++;
+
+		ChangePieceType(CurrentType);
+	}
+	public void DegradePiece()
+	{
+		if ((int)CurrentType == 0)
+			CurrentType = (PieceType)5;
+		else
+			CurrentType--;
+
+		ChangePieceType(CurrentType);
+	}
+
 	void StrafeRight()
 	{
 		//Debug.Log("StrafeRight");
@@ -294,6 +313,8 @@ public class PlayerMove : ChessPiece
 
 		_piecesManager.Enemies.Remove(TargetEnemy);
 		Destroy(TargetEnemy.gameObject);
+
+		UpgradePiece();
 
 		_freeToAct = true;
 	}
