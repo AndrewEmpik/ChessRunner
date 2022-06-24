@@ -10,6 +10,10 @@ public class Enemy : ChessPiece
 	PlayerMove _player;
 	Vector2Int _unitCellAddress;
 
+	private bool _playerDetected = false;
+	private Vector2Int _cellPlayerDetectedAt;
+	private Vector2Int _targetCellToAttack;
+
 	public override void Start()
     {
 		base.Start();
@@ -26,10 +30,24 @@ public class Enemy : ChessPiece
 
 	private void Update()
 	{
-		if (CheckPlayerUnderCursor())
+		if (!_playerDetected)
 		{
-			// для теста бить сразу (ага, это СПАРТАААА)
-			RushAtPlayer();
+			if (CheckPlayerUnderCursor())
+			{
+				_playerDetected = true;
+				_cellPlayerDetectedAt = _player.PlayerCellAddress;
+				_targetCellToAttack = _cellPlayerDetectedAt + Vector2Int.up;
+			}
+		}
+		else // следим за игроком
+		{
+			if (_player.PlayerCellAddress != _cellPlayerDetectedAt)
+			{
+				if (_player.PlayerCellAddress == _targetCellToAttack)
+					RushAtPlayer();
+				else // эх, улизнул
+					_playerDetected = false;
+			}
 		}
 	}
 
