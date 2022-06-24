@@ -631,18 +631,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86aa78e0b9653f74db4c634fad11e24f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentType: 0
+  CurrentType: 1
   HitCursorPrototypes: []
   Speed: 2.5
   _maxXPosition: 2
   _strafeDuration: 0.12
   _thresholdForShortTap: 70
+  _kingMesh: {fileID: 28422059}
   _pawnMesh: {fileID: 138306847}
   _knightMesh: {fileID: 70936480}
   _bishopMesh: {fileID: 150619606}
   _rookMesh: {fileID: 1283187071}
   _queenMesh: {fileID: 1272511005}
-  _kingMesh: {fileID: 28422059}
   style:
     m_Name: 
     m_Normal:
@@ -713,6 +713,7 @@ MonoBehaviour:
   PlayerHitCursorPrefab: {fileID: 1661305081396158059, guid: 437d08955b9f91f42863ab0efeb76a72,
     type: 3}
   PlayerHitCursorList: []
+  PlayerCellAddress: {x: 0, y: 0}
 --- !u!4 &360760931
 Transform:
   m_ObjectHideFlags: 0

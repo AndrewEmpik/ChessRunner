@@ -15,12 +15,12 @@ public class PlayerMove : ChessPiece
 	[SerializeField] float _strafeDuration = 0.25f;
 	[SerializeField] float _thresholdForShortTap = 70f;
 
+	[SerializeField] GameObject _kingMesh;
 	[SerializeField] GameObject _pawnMesh;
 	[SerializeField] GameObject _knightMesh;
 	[SerializeField] GameObject _bishopMesh;
 	[SerializeField] GameObject _rookMesh;
 	[SerializeField] GameObject _queenMesh;
-	[SerializeField] GameObject _kingMesh;
 
 	private Vector2 _startTapPosition;
 	private Vector2 _tapOffset;
@@ -129,6 +129,8 @@ public class PlayerMove : ChessPiece
 			if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
 				Beat();
 
+			if (Input.GetKey(KeyCode.Alpha0))
+				ChangePieceType(PieceType.King);
 			if (Input.GetKey(KeyCode.Alpha1))
 				ChangePieceType(PieceType.Pawn);
 			if (Input.GetKey(KeyCode.Alpha2))
@@ -139,8 +141,6 @@ public class PlayerMove : ChessPiece
 				ChangePieceType(PieceType.Rook);
 			if (Input.GetKey(KeyCode.Alpha5))
 				ChangePieceType(PieceType.Queen);
-			if (Input.GetKey(KeyCode.Alpha0))
-				ChangePieceType(PieceType.King);
 
 #endif
 
@@ -199,15 +199,18 @@ public class PlayerMove : ChessPiece
 	{
 		base.ChangePieceType(type);
 
+		_kingMesh.SetActive(false);
 		_pawnMesh.SetActive(false);
 		_knightMesh.SetActive(false);
 		_bishopMesh.SetActive(false);
 		_rookMesh.SetActive(false);
 		_queenMesh.SetActive(false);
-		_kingMesh.SetActive(false);
 
 		switch (type)
 		{
+			case PieceType.King:
+				_kingMesh.SetActive(true);
+				break;
 			case PieceType.Pawn:
 				_pawnMesh.SetActive(true);
 				break;
@@ -222,9 +225,6 @@ public class PlayerMove : ChessPiece
 				break;
 			case PieceType.Queen:
 				_queenMesh.SetActive(true);
-				break;
-			case PieceType.King:
-				_kingMesh.SetActive(true);
 				break;
 		}
 

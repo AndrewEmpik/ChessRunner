@@ -6,12 +6,12 @@ public abstract class ChessPiece : MonoBehaviour
 {
 	public enum PieceType
 	{
+		King, // он самый первый для технического удобства
 		Pawn,
 		Knight,
 		Bishop,
 		Rook,
-		Queen,
-		King
+		Queen
 	}
 
 	public PieceType CurrentType;
@@ -30,6 +30,13 @@ public abstract class ChessPiece : MonoBehaviour
 
 		switch (CurrentType)
 		{
+			case PieceType.King:
+				HitCursorPrototypes.Add(new Vector2Int(-1, 0));
+				HitCursorPrototypes.Add(new Vector2Int(-1, 1));
+				HitCursorPrototypes.Add(new Vector2Int(0, 1));
+				HitCursorPrototypes.Add(new Vector2Int(1, 1));
+				HitCursorPrototypes.Add(new Vector2Int(1, 0));
+				break;
 			case PieceType.Pawn:
 				HitCursorPrototypes.Add(new Vector2Int(-1, 1));
 				HitCursorPrototypes.Add(new Vector2Int(1, 1));
@@ -69,14 +76,6 @@ public abstract class ChessPiece : MonoBehaviour
 				HitCursorPrototypes.Add(new Vector2Int(-1, 1));
 				HitCursorPrototypes.Add(new Vector2Int(1, 1));
 				HitCursorPrototypes.Add(new Vector2Int(2, 2));
-				break;
-
-			case PieceType.King:
-				HitCursorPrototypes.Add(new Vector2Int(-1, 0));
-				HitCursorPrototypes.Add(new Vector2Int(-1, 1));
-				HitCursorPrototypes.Add(new Vector2Int(0, 1));
-				HitCursorPrototypes.Add(new Vector2Int(1, 1));
-				HitCursorPrototypes.Add(new Vector2Int(1, 0));
 				break;
 		}
 	}
