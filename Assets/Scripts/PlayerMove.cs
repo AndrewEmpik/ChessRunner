@@ -247,14 +247,20 @@ public class PlayerMove : ChessPiece
 
 		ChangePieceType(CurrentType);
 	}
-	public void DegradePiece()
+	public int DegradePiece()
 	{
+		int returnValue = 0;
 		if ((int)CurrentType == 0)
+		{
 			CurrentType = (PieceType)5;
+			returnValue = -1;
+		}
 		else
 			CurrentType--;
 
 		ChangePieceType(CurrentType);
+
+		return returnValue;
 	}
 
 	void StrafeRight()

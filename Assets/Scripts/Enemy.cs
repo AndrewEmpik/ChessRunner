@@ -7,12 +7,17 @@ public class Enemy : ChessPiece
 
 	public GameObject EnemyHitCursorPrefab;
 	public List<GameObject> EnemyHitCursorList = new List<GameObject>();
+	
 	PlayerMove _player;
+	PiecesManager _piecesManager;
+	
 	Vector2Int _unitCellAddress;
 
 	private bool _playerDetected = false;
 	private Vector2Int _cellPlayerDetectedAt;
 	private Vector2Int _targetCellToAttack;
+
+	private bool _active = true;
 
 	public override void Start()
     {
@@ -26,27 +31,34 @@ public class Enemy : ChessPiece
 		PlaceHitCursors();
 
 		_player = FindObjectOfType<PlayerMove>(); // bad practice?
+		_piecesManager = FindObjectOfType<PiecesManager>(); // bad practice?
 	}
 
 	private void Update()
 	{
-		if (!_playerDetected)
+		if (_active)
 		{
-			if (CheckPlayerUnderCursor())
+			if (!_playerDetected)
 			{
-				_playerDetected = true;
-				_cellPlayerDetectedAt = _player.PlayerCellAddress;
-				_targetCellToAttack = _cellPlayerDetectedAt + Vector2Int.up;
+				if (CheckPlayerUnderCursor())
+				{
+					_playerDetected = true;
+					_cellPlayerDetectedAt = _player.PlayerCellAddress;
+					_targetCellToAttack = _cellPlayerDetectedAt + Vector2Int.up;
+				}
 			}
-		}
-		else // следим за игроком
-		{
-			if (_player.PlayerCellAddress != _cellPlayerDetectedAt)
+			else // следим за игроком
 			{
-				if (_player.PlayerCellAddress == _targetCellToAttack)
-					RushAtPlayer();
-				else // эх, улизнул
-					_playerDetected = false;
+				if (_player.PlayerCellAddress != _cellPlayerDetectedAt)
+				{
+					if (_player.PlayerCellAddress == _targetCellToAttack)
+					{
+						RushAtPlayer();
+						_active = false;
+					}
+					else // эх, улизнул
+						_playerDetected = false;
+				}
 			}
 		}
 	}
@@ -106,6 +118,7 @@ public class Enemy : ChessPiece
 	IEnumerator BeatRushCoroutine()
 	{
 		Vector3 startPosition = transform.position;
+		Debug.Log("Старт корутины BeatRushCoroutine");
 
 		float strafeDuration = 0.12f;
 
@@ -117,20 +130,26 @@ public class Enemy : ChessPiece
 												Mathf.Lerp(startPosition.z, _player.transform.position.z, t / strafeDuration));
 			yield return null;
 		}
-		transform.position = _player.transform.position;
 
-		//_piecesManager.Enemies.Remove(TargetEnemy);
-		//Destroy(TargetEnemy.gameObject);
+		if (_player.DegradePiece() == 0)
+		{
+			Debug.Log("_active не меняется, по-прежнему " + _active);
+			_piecesManager.Enemies.Remove(this);
+			Destroy(this.gameObject);
+		}
+		else
+			ClearEnemyHitCursors();
+	}
 
-		//UpgradePiece();
-
-		//_freeToAct = true;
+	void ClearEnemyHitCursors()
+	{
+		foreach (GameObject C in EnemyHitCursorList)
+			Destroy(C);
+		EnemyHitCursorList.Clear();
 	}
 
 	void OnDestroy()
     {
-		foreach (GameObject C in EnemyHitCursorList)
-			Destroy(C);
-		EnemyHitCursorList.Clear();
-    }
+		ClearEnemyHitCursors();
+	}
 }
