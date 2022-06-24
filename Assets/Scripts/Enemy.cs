@@ -7,6 +7,8 @@ public class Enemy : ChessPiece
 
 	public GameObject EnemyHitCursorPrefab;
 	public List<GameObject> EnemyHitCursorList = new List<GameObject>();
+	PlayerMove _player;
+	Vector2Int _unitCellAddress;
 
 	public override void Start()
     {
@@ -18,16 +20,27 @@ public class Enemy : ChessPiece
 		}
 
 		PlaceHitCursors();
+
+		_player = FindObjectOfType<PlayerMove>(); // bad practice?
+	}
+
+	private void Update()
+	{
+		if (CheckPlayerUnderCursor())
+		{
+			// дл€ теста бить сразу (ага, это —ѕј–“јјјј)
+			RushAtPlayer();
+		}
 	}
 
 	void PlaceHitCursors()
 	{
-		Vector2Int unitCellAddress = GlobalManagement.GetCellAddressByPosition(transform.position.x, transform.position.z);
+		_unitCellAddress = GlobalManagement.GetCellAddressByPosition(transform.position.x, transform.position.z);
 		Vector2Int newHitCursorCoords;
 
 		for (int i = 0; i < EnemyHitCursorList.Count; i++)
 		{
-			newHitCursorCoords = unitCellAddress + HitCursorPrototypes[i] * new Vector2Int(1,-1); // * -1 по y
+			newHitCursorCoords = _unitCellAddress + HitCursorPrototypes[i] * new Vector2Int(1,-1); // * -1 по y
 
 			//Debug.Log(newHitCursorCoords.x + ", " + newHitCursorCoords.y + " (" + GlobalManagement.PathRadius + ")");
 
@@ -39,6 +52,61 @@ public class Enemy : ChessPiece
 			else
 				EnemyHitCursorList[i].SetActive(false);
 		}
+	}
+
+	bool CheckPlayerUnderCursor()
+	{
+		if (_player.PlayerCellAddress.y < _unitCellAddress.y - 2
+			|| _player.PlayerCellAddress.y > _unitCellAddress.y + 2)
+		{
+			return false;
+		}
+		else if (_unitCellAddress.x != 0
+			&& (_player.PlayerCellAddress.x < _unitCellAddress.x - 2
+				|| _player.PlayerCellAddress.x > _unitCellAddress.x + 2))
+		{
+			return false;
+		}
+		else
+		{
+			for (int i = 0; i < EnemyHitCursorList.Count; i++)
+			{
+				// TODO запоминать CellAddress ещЄ раньше, чтобы не пересчитывать каждый раз
+				if (GlobalManagement.GetCellAddressByPosition(	EnemyHitCursorList[i].transform.position.x, 
+																EnemyHitCursorList[i].transform.position.z	) == _player.PlayerCellAddress)
+					return true;
+			}
+		}
+		return false;
+	}
+
+	void RushAtPlayer()
+	{
+		StartCoroutine(BeatRushCoroutine());
+	}
+
+	IEnumerator BeatRushCoroutine()
+	{
+		Vector3 startPosition = transform.position;
+
+		float strafeDuration = 0.12f;
+
+		// тут TODO strafeDuration прописать в переменную
+		for (float t = 0; t < strafeDuration; t += Time.deltaTime * 1f)
+		{
+			transform.position = new Vector3(Mathf.Lerp(startPosition.x, _player.transform.position.x, t / strafeDuration),
+												transform.position.y,
+												Mathf.Lerp(startPosition.z, _player.transform.position.z, t / strafeDuration));
+			yield return null;
+		}
+		transform.position = _player.transform.position;
+
+		//_piecesManager.Enemies.Remove(TargetEnemy);
+		//Destroy(TargetEnemy.gameObject);
+
+		//UpgradePiece();
+
+		//_freeToAct = true;
 	}
 
 	void OnDestroy()

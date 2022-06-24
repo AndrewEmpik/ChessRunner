@@ -37,6 +37,8 @@ public class PlayerMove : ChessPiece
 
 	private PiecesManager _piecesManager;
 
+	public Vector2Int PlayerCellAddress;
+
 	public override void Start()
     {
 		base.Start();
@@ -152,12 +154,12 @@ public class PlayerMove : ChessPiece
 
 	void PlaceHitCursors()
 	{
-		Vector2Int playerCellAddress = GlobalManagement.GetCellAddressByPosition(transform.position.x, transform.position.z);
+		PlayerCellAddress = GlobalManagement.GetCellAddressByPosition(transform.position.x, transform.position.z);
 		Vector2Int newHitCursorCoords;
 
 		for (int i = 0; i < PlayerHitCursorList.Count; i++)
 		{
-			newHitCursorCoords = playerCellAddress + HitCursorPrototypes[i];
+			newHitCursorCoords = PlayerCellAddress + HitCursorPrototypes[i];
 
 			if (Mathf.Abs(newHitCursorCoords.x) <= GlobalManagement.PathRadius)
 			{
