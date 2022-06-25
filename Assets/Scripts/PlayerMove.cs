@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerMove : ChessPiece
 {
@@ -80,7 +81,7 @@ public class PlayerMove : ChessPiece
 		if (_freeToAct)
 		{
 
-			if (Input.GetMouseButtonDown(0))
+			if (Input.GetMouseButtonDown(0) && !IsPointerOverGameObject())
 			{
 				_startTapPosition = Input.mousePosition;
 			}
@@ -153,6 +154,20 @@ public class PlayerMove : ChessPiece
 		if (transform.position.z > 75.2f)
 		transform.position = new Vector3(transform.position.x, transform.position.y, 0.2f);
 
+	}
+
+	public static bool IsPointerOverGameObject()
+	{
+		if (EventSystem.current.IsPointerOverGameObject())
+			return true;
+
+		if (Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Began)
+		{
+			if (EventSystem.current.IsPointerOverGameObject(Input.touches[0].fingerId))
+				return true;
+		}
+
+		return false;
 	}
 
 	void PlaceHitCursors()
