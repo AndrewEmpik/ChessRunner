@@ -1,11 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Management : MonoBehaviour
 {
 	private float _fps;
 	private GUIStyle style = new GUIStyle();
+
+	public UnityEvent OnWin;
+	public UnityEvent OnLose;
+
 
 	void Start()
 	{
@@ -30,7 +35,19 @@ public class Management : MonoBehaviour
 
 	void Update()
 	{
-		if (Input.GetKey(KeyCode.Escape))
-			GlobalManagement.QuitGame();
+		//if (Input.GetKey(KeyCode.Escape))
+		//	GlobalManagement.QuitGame();
+	}
+
+	public void Win()
+	{
+		OnWin.Invoke();
+		Time.timeScale = 0f;
+	}
+
+	public void Lose()
+	{
+		OnLose.Invoke();
+		Time.timeScale = 0f;
 	}
 }

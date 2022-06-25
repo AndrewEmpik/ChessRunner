@@ -39,11 +39,14 @@ public class PlayerMove : ChessPiece
 
 	public Vector2Int PlayerCellAddress;
 
+	Management _management;
+
 	public override void Start()
     {
 		base.Start();
 
 		_piecesManager = FindObjectOfType<PiecesManager>();
+		_management = FindObjectOfType<Management>();
 
 		_screenSizeX = Screen.width;
 		_screenCenterX = _screenSizeX / 2;
@@ -254,6 +257,7 @@ public class PlayerMove : ChessPiece
 		{
 			CurrentType = (PieceType)5;
 			returnValue = -1;
+			_management.Lose();
 		}
 		else
 			CurrentType--;

@@ -35,7 +35,7 @@ public static class GlobalManagement
 		Vector2 flatPosition = new Vector2(x, y) * CellSize + WorldZeroPoint;
 		return new Vector3(flatPosition.x, 0, flatPosition.y);
 	}
-
+/*
 	public static void QuitGame()
 	{
 #if UNITY_EDITOR
@@ -44,4 +44,5 @@ public static class GlobalManagement
 			Application.Quit(); 
 #endif
 	}
+	*/
 }
