@@ -9,6 +9,10 @@ public static class GlobalManagement
 	public static int PathRadius = (PathWidthInCells - 1) / 2; // считаем, что PathWidthInCells нечётный
 	public static float CellSize = 1f;
 
+	public static bool FirstLoad = true;
+	public static bool MusicEnabled = true;
+	public static float Volume = 1.0f;
+
 	public static Vector2Int GetCellAddressByPosition(float x, float y)
 	{
 		float xRelative = x - WorldZeroPoint.x;
@@ -31,7 +35,7 @@ public static class GlobalManagement
 		Vector2 flatPosition = new Vector2(x, y) * CellSize + WorldZeroPoint;
 		return new Vector3(flatPosition.x, 0, flatPosition.y);
 	}
-
+/*
 	public static void QuitGame()
 	{
 #if UNITY_EDITOR
@@ -40,4 +44,5 @@ public static class GlobalManagement
 			Application.Quit(); 
 #endif
 	}
+	*/
 }

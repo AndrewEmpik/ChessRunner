@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerMove : ChessPiece
 {
@@ -39,11 +40,14 @@ public class PlayerMove : ChessPiece
 
 	public Vector2Int PlayerCellAddress;
 
+	Management _management;
+
 	public override void Start()
     {
 		base.Start();
 
 		_piecesManager = FindObjectOfType<PiecesManager>();
+		_management = FindObjectOfType<Management>();
 
 		_screenSizeX = Screen.width;
 		_screenCenterX = _screenSizeX / 2;
@@ -64,9 +68,9 @@ public class PlayerMove : ChessPiece
 
 	void OnGUI()
 	{
-		Vector2Int cell = GlobalManagement.GetCellAddressByPosition(transform.position.x, transform.position.z);
-		GUI.Label(new Rect(_screenCenterX, 10, 100, 100), "dbg: " + _tapOffset.magnitude.ToString() + " (" + _thresholdForShortTap.ToString("0") + ")" + "\n" +
-															"cell: " + cell.x + "," + cell.y, style);
+		//Vector2Int cell = GlobalManagement.GetCellAddressByPosition(transform.position.x, transform.position.z);
+		//GUI.Label(new Rect(_screenCenterX, 10, 100, 100), "dbg: " + _tapOffset.magnitude.ToString() + " (" + _thresholdForShortTap.ToString("0") + ")" + "\n" +
+		//													"cell: " + cell.x + "," + cell.y, style);
 	}
 
 	void Update()
@@ -77,7 +81,7 @@ public class PlayerMove : ChessPiece
 		if (_freeToAct)
 		{
 
-			if (Input.GetMouseButtonDown(0))
+			if (Input.GetMouseButtonDown(0) && !IsPointerOverGameObject())
 			{
 				_startTapPosition = Input.mousePosition;
 			}
@@ -150,6 +154,20 @@ public class PlayerMove : ChessPiece
 		if (transform.position.z > 75.2f)
 		transform.position = new Vector3(transform.position.x, transform.position.y, 0.2f);
 
+	}
+
+	public static bool IsPointerOverGameObject()
+	{
+		if (EventSystem.current.IsPointerOverGameObject())
+			return true;
+
+		if (Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Began)
+		{
+			if (EventSystem.current.IsPointerOverGameObject(Input.touches[0].fingerId))
+				return true;
+		}
+
+		return false;
 	}
 
 	void PlaceHitCursors()
@@ -254,6 +272,7 @@ public class PlayerMove : ChessPiece
 		{
 			CurrentType = (PieceType)5;
 			returnValue = -1;
+			_management.Lose();
 		}
 		else
 			CurrentType--;

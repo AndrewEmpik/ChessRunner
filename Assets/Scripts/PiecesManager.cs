@@ -7,10 +7,16 @@ public class PiecesManager : MonoBehaviour
 	public List<Enemy> Enemies = new List<Enemy>();
 
 	[SerializeField] Enemy[] _piecePrefabs;
+	[SerializeField] int _enemiesNumber = 12;
+
+	Management _management;
 
 	void Start()
     {
-		for (int i = 0; i < 12; i++)
+
+		_management = FindObjectOfType<Management>();
+
+		for (int i = 0; i < _enemiesNumber; i++)
 		{
 			//Enemy E = new Enemy();
 			int _newTypeNumber = Random.Range(0, 6);
@@ -24,8 +30,9 @@ public class PiecesManager : MonoBehaviour
 		}
     }
 
-    void Update()
-    {
-        
-    }
+	public void CheckPiecesListEmpty()
+	{
+		if (Enemies.Count <= 0)
+			_management.Win();
+	}
 }

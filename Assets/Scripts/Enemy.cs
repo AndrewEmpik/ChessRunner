@@ -138,7 +138,10 @@ public class Enemy : ChessPiece
 			Destroy(this.gameObject);
 		}
 		else
-			ClearEnemyHitCursors();
+		{
+			//ClearEnemyHitCursors();
+			_player.gameObject.SetActive(false);
+		}
 	}
 
 	void ClearEnemyHitCursors()
@@ -151,5 +154,6 @@ public class Enemy : ChessPiece
 	void OnDestroy()
     {
 		ClearEnemyHitCursors();
+		_piecesManager.CheckPiecesListEmpty();
 	}
 }
