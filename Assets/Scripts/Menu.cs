@@ -16,8 +16,9 @@ public class Menu : MonoBehaviour
 	private bool _menuIsActive;
 	public bool GameInProgress = true;
 
-	[SerializeField] Toggle MusicToggle;
-	[SerializeField] Slider VolumeSlider;
+	[SerializeField] GameObject _musicCrossOut;
+
+	public AudioSource Music;
 
 	private void Start()
 	{
@@ -30,14 +31,14 @@ public class Menu : MonoBehaviour
 
 		GlobalManagement.FirstLoad = false;
 
-		//MusicToggle.isOn = GlobalManagement.MusicEnabled;
-		//VolumeSlider.value = GlobalManagement.Volume;
+		Music.enabled = GlobalManagement.MusicEnabled;
+		_musicCrossOut.SetActive(!GlobalManagement.MusicEnabled);
 	}
 
 	public void OpenMenuWindow()
 	{
 		_menuIsActive = true;
-		MenuButton.SetActive(false);
+		//MenuButton.SetActive(false);
 		MenuWindow.SetActive(true);
 		foreach (MonoBehaviour C in ComponentsToDisable)
 			C.enabled = false;
@@ -47,7 +48,7 @@ public class Menu : MonoBehaviour
 	public void CloseMenuWindow()
 	{
 		_menuIsActive = false;
-		MenuButton.SetActive(true);
+		//MenuButton.SetActive(true);
 		MenuWindow.SetActive(false);
 		foreach (MonoBehaviour C in ComponentsToDisable)
 			C.enabled = true;
@@ -83,6 +84,13 @@ public class Menu : MonoBehaviour
 		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 		//CloseMenuWindow();
 
+	}
+
+	public void ToggleMusic()
+	{
+		GlobalManagement.MusicEnabled = !GlobalManagement.MusicEnabled;
+		Music.enabled = GlobalManagement.MusicEnabled;
+		_musicCrossOut.SetActive(!GlobalManagement.MusicEnabled);
 	}
 
 	public void QuitGame()
