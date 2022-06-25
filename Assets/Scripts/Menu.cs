@@ -33,6 +33,11 @@ public class Menu : MonoBehaviour
 
 		Music.enabled = GlobalManagement.MusicEnabled;
 		_musicCrossOut.SetActive(!GlobalManagement.MusicEnabled);
+
+		//if (GameObject.FindGameObjectsWithTag("Music").Length > 1)
+		//	Destroy(Music.gameObject);
+
+		//DontDestroyOnLoad(Music.gameObject);
 	}
 
 	public void OpenMenuWindow()
@@ -57,10 +62,13 @@ public class Menu : MonoBehaviour
 
 	public void ToggleMenu()
 	{
-		if (_menuIsActive)
-			CloseMenuWindow();
-		else
-			OpenMenuWindow();
+		if (GameInProgress)
+		{
+			if (_menuIsActive)
+				CloseMenuWindow();
+			else
+				OpenMenuWindow();
+		}
 	}
 
 	public void ToggleGameInProgress()
