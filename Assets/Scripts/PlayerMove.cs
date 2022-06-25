@@ -68,9 +68,9 @@ public class PlayerMove : ChessPiece
 
 	void OnGUI()
 	{
-		Vector2Int cell = GlobalManagement.GetCellAddressByPosition(transform.position.x, transform.position.z);
-		GUI.Label(new Rect(_screenCenterX, 10, 100, 100), "dbg: " + _tapOffset.magnitude.ToString() + " (" + _thresholdForShortTap.ToString("0") + ")" + "\n" +
-															"cell: " + cell.x + "," + cell.y, style);
+		//Vector2Int cell = GlobalManagement.GetCellAddressByPosition(transform.position.x, transform.position.z);
+		//GUI.Label(new Rect(_screenCenterX, 10, 100, 100), "dbg: " + _tapOffset.magnitude.ToString() + " (" + _thresholdForShortTap.ToString("0") + ")" + "\n" +
+		//													"cell: " + cell.x + "," + cell.y, style);
 	}
 
 	void Update()
