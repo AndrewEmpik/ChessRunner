@@ -14,6 +14,7 @@ public class Menu : MonoBehaviour
 	public List<MonoBehaviour> ComponentsToDisable;
 
 	private bool _menuIsActive;
+	public bool GameInProgress = true;
 
 	[SerializeField] Toggle MusicToggle;
 	[SerializeField] Slider VolumeSlider;
@@ -61,11 +62,19 @@ public class Menu : MonoBehaviour
 			OpenMenuWindow();
 	}
 
+	public void ToggleGameInProgress()
+	{
+		GameInProgress = !GameInProgress;
+	}
+
 	private void Update()
 	{
 		if (Input.GetKeyDown(KeyCode.Escape))
 		{
-			ToggleMenu();
+			if (GameInProgress)
+				ToggleMenu();
+			else
+				QuitGame();
 		}
 	}
 
