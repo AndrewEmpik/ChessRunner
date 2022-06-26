@@ -166,7 +166,8 @@ public class PlayerMove : ChessPiece
 
 		// temp teleportation
 		if (transform.position.z > _offsetForRewind)
-		transform.position = new Vector3(transform.position.x, transform.position.y, 0f);
+			//transform.position = new Vector3(transform.position.x, transform.position.y, 0f);
+			_management.Win();
 
 	}
 

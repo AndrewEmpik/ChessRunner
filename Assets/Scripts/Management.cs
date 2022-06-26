@@ -36,8 +36,8 @@ public class Management : MonoBehaviour
 	void OnGUI()
 	{
 		//float newFPS = 1.0f / Time.smoothDeltaTime;
-		_fps = 1.0f / Time.smoothDeltaTime;  //Mathf.Lerp(fps, newFPS, 0.0005f);
-		GUI.Label(new Rect(10, 10, 100, 100), "FPS: " + ((int)_fps).ToString(), style);
+		//_fps = 1.0f / Time.smoothDeltaTime;  //Mathf.Lerp(fps, newFPS, 0.0005f);
+		//GUI.Label(new Rect(10, 10, 100, 100), "FPS: " + ((int)_fps).ToString(), style);
 	}
 
 	void Update()
@@ -46,9 +46,15 @@ public class Management : MonoBehaviour
 		//	GlobalManagement.QuitGame();
 	}
 
+	private bool _win = false;
+
 	public void Win()
 	{
-		OnWin.Invoke();
+		if (!_win)
+		{
+			_win = true;
+			OnWin.Invoke();
+		}
 		Time.timeScale = 0f;
 	}
 
