@@ -76,10 +76,20 @@ public class PlayerMove : ChessPiece
 	void Update()
     {
 		transform.position += Vector3.forward * Speed * Time.deltaTime;
+
+		PlayerCellAddress = GlobalManagement.GetCellAddressByPosition(transform.position.x, transform.position.z);
+		// TODO оптимизировать, добавив событие смены ячейки
 		PlaceHitCursors();
 
 		if (_freeToAct)
 		{
+			Enemy enemyInThisCell = CheckIfInEnemyCell();
+			if (enemyInThisCell)
+			{
+				DegradePiece();
+				_piecesManager.Enemies.Remove(enemyInThisCell);
+				Destroy(enemyInThisCell.gameObject);
+			}
 
 			if (Input.GetMouseButtonDown(0) && !IsPointerOverGameObject())
 			{
@@ -89,8 +99,6 @@ public class PlayerMove : ChessPiece
 			if (Input.GetMouseButtonUp(0))
 			{
 				_tapOffset = (Vector2)Input.mousePosition - _startTapPosition;
-
-
 
 				// если короткое нажатие
 				if (_tapOffset.magnitude <= _thresholdForShortTap)
@@ -172,7 +180,6 @@ public class PlayerMove : ChessPiece
 
 	void PlaceHitCursors()
 	{
-		PlayerCellAddress = GlobalManagement.GetCellAddressByPosition(transform.position.x, transform.position.z);
 		Vector2Int newHitCursorCoords;
 
 		for (int i = 0; i < PlayerHitCursorList.Count; i++)
@@ -206,6 +213,27 @@ public class PlayerMove : ChessPiece
 					if (EnemyCellAddress == CursorCellAddress)
 						return _piecesManager.Enemies[j];
 				}
+			}
+		}
+
+		return null;
+	}
+
+	Enemy CheckIfInEnemyCell()
+	{
+		for (int j = 0; j < _piecesManager.Enemies.Count; j++)
+		{
+			if (_piecesManager.Enemies[j].transform.position.z < transform.position.z - GlobalManagement.CellSize / 2)
+				continue;
+			else if (_piecesManager.Enemies[j].transform.position.z > transform.position.z + GlobalManagement.CellSize / 2)
+				break;
+			else
+			{
+				Vector2 EnemyCellAddress = GlobalManagement.GetCellAddressByPosition(_piecesManager.Enemies[j].transform.position);
+				//Debug.Log("Enemy:  " + EnemyCellAddress.x + ", " + EnemyCellAddress.y);
+				//Debug.Log("Player: " + PlayerCellAddress.x + ", " + PlayerCellAddress.y);
+				if (EnemyCellAddress == PlayerCellAddress)
+					return _piecesManager.Enemies[j];
 			}
 		}
 
@@ -284,7 +312,6 @@ public class PlayerMove : ChessPiece
 
 	void StrafeRight()
 	{
-		//Debug.Log("StrafeRight");
 		if (_curPositionNumber >= 2)
 		{
 			return; // можно в будущем сделать сход с трассы
@@ -294,7 +321,6 @@ public class PlayerMove : ChessPiece
 
 	void StrafeLeft()
 	{
-		//Debug.Log("StrafeLeft");
 		if (_curPositionNumber <= -2)
 		{
 			return; // можно в будущем сделать сход с трассы
@@ -346,9 +372,6 @@ public class PlayerMove : ChessPiece
 		_freeToAct = true;
 	}
 
-	//IEnumerator StrafeCoroutine(int newPositionNumber)
-
-
 	float GetXByPositionNumber(int positionNumber)
 	{
 		positionNumber = Mathf.Clamp(positionNumber, -2, 2);
@@ -359,13 +382,7 @@ public class PlayerMove : ChessPiece
 	{
 		Enemy TargetEnemy = FindEnemyUnderCursors();
 		if (TargetEnemy)
-		{
-			Debug.Log("Beat!");
 			RushAtPosition(TargetEnemy);
-
-			//WaitForSeconds(1f);
-
-		}
 	}
 
 	void Empty()

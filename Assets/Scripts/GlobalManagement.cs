@@ -10,7 +10,7 @@ public static class GlobalManagement
 	public static float CellSize = 1f;
 
 	public static bool FirstLoad = true;
-	public static bool MusicEnabled = true;
+	public static bool MusicEnabled = false;//true;
 	public static float Volume = 1.0f;
 
 	public static Vector2Int GetCellAddressByPosition(float x, float y)
@@ -19,6 +19,11 @@ public static class GlobalManagement
 		int _x = (int)((Mathf.Abs(xRelative) + CellSize / 2) / CellSize * Mathf.Sign(xRelative));
 		int _y = (int)((y-WorldZeroPoint.y	+ CellSize / 2) / CellSize);
 		return new Vector2Int(_x,_y);
+	}
+
+	public static Vector2Int GetCellAddressByPosition(Vector3 point)
+	{
+		return GetCellAddressByPosition(point.x, point.z);
 	}
 	public static Vector2Int GetCellAddressByPosition(Vector2 point)
 	{
