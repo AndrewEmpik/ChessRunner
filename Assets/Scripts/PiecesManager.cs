@@ -29,7 +29,7 @@ public class PiecesManager : MonoBehaviour
 				Instantiate(
 					_piecePrefabs[_newTypeNumber], 
 					GlobalManagement.GetPositionByCellAddress(Random.Range(-2,3), 7 + i * 6), 
-					Quaternion.Euler(-90,0,0)
+					Quaternion.Euler(-90,180,0)
 				)
 			);
 		}
