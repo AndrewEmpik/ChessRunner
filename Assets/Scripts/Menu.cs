@@ -4,8 +4,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-// взято из Платформера полностью
-
 public class Menu : MonoBehaviour
 { 
 	public GameObject MenuButton;

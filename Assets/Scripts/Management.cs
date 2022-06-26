@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class Management : MonoBehaviour
 {
@@ -11,11 +13,16 @@ public class Management : MonoBehaviour
 	public UnityEvent OnWin;
 	public UnityEvent OnLose;
 
+	public int Score = 0;
+
+	[SerializeField] TMP_Text _scoreTextUI;
 
 	void Start()
 	{
 		style.fontSize = 32;
 		style.normal.textColor = Color.white;
+
+		UpdateScoreUI();
 
 #if !UNITY_EDITOR
 		Application.targetFrameRate = 60;
@@ -49,5 +56,16 @@ public class Management : MonoBehaviour
 	{
 		OnLose.Invoke();
 		Time.timeScale = 0f;
+	}
+
+	public void AddScore(int value)
+	{
+		Score += value;
+		UpdateScoreUI();
+	}
+
+	void UpdateScoreUI()
+	{
+		_scoreTextUI.text = Score.ToString("00");
 	}
 }

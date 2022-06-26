@@ -376,6 +376,8 @@ public class PlayerMove : ChessPiece
 
 		UpgradePiece();
 
+		_management.AddScore(1);
+
 		FreeToAct = true;
 	}
 
