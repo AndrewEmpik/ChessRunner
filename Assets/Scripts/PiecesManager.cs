@@ -8,6 +8,7 @@ public class PiecesManager : MonoBehaviour
 
 	[SerializeField] Enemy[] _piecePrefabs;
 	[SerializeField] int _enemiesNumber = 12;
+	[SerializeField] int _offsetBetweenEnemies = 4;
 
 	Management _management;
 
@@ -28,7 +29,7 @@ public class PiecesManager : MonoBehaviour
 			Enemies.Add(
 				Instantiate(
 					_piecePrefabs[_newTypeNumber], 
-					GlobalManagement.GetPositionByCellAddress(Random.Range(-2,3), 7 + i * 6), 
+					GlobalManagement.GetPositionByCellAddress(Random.Range(-2,3), 7 + i * _offsetBetweenEnemies), 
 					Quaternion.Euler(-90,180,0)
 				)
 			);

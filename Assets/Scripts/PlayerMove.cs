@@ -16,6 +16,7 @@ public class PlayerMove : ChessPiece
 	[SerializeField] float _maxXPosition = 2f;
 	[SerializeField] float _strafeDuration = 0.25f;
 	[SerializeField] float _thresholdForShortTap = 70f;
+	[SerializeField] float _offsetForRewind = 80f;
 
 	[SerializeField] GameObject _kingMesh;
 	[SerializeField] GameObject _pawnMesh;
@@ -132,10 +133,6 @@ public class PlayerMove : ChessPiece
 						{
 							Beat();
 						}
-						else
-						{
-							SomeActionAtDucking();
-						}
 					}
 				}
 			}
@@ -168,8 +165,8 @@ public class PlayerMove : ChessPiece
 		}
 
 		// temp teleportation
-		if (transform.position.z > 75.2f)
-		transform.position = new Vector3(transform.position.x, transform.position.y, 0.2f);
+		if (transform.position.z > _offsetForRewind)
+		transform.position = new Vector3(transform.position.x, transform.position.y, 0f);
 
 	}
 
@@ -393,15 +390,6 @@ public class PlayerMove : ChessPiece
 		Enemy TargetEnemy = FindEnemyUnderCursors();
 		if (TargetEnemy && !TargetEnemy.IsInRush)
 			RushAtPosition(TargetEnemy);
-	}
-
-	void Empty()
-	{
-	}
-
-	void SomeActionAtDucking() // реализовать что-то, ну или не надо, решай там уж сам
-	{
-		Debug.Log("Duck (???)");
 	}
 
 }
