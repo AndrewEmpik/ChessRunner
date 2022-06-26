@@ -15,6 +15,7 @@ public class Menu : MonoBehaviour
 	public bool GameInProgress = true;
 
 	[SerializeField] GameObject _musicCrossOut;
+	[SerializeField] GameObject _helpWindow;
 
 	public AudioSource Music;
 
@@ -82,6 +83,8 @@ public class Menu : MonoBehaviour
 				ToggleMenu();
 			else
 				QuitGame();
+
+			_helpWindow.SetActive(false);
 		}
 	}
 
