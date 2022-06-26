@@ -86,9 +86,13 @@ public class PlayerMove : ChessPiece
 			Enemy enemyInThisCell = CheckIfInEnemyCell();
 			if (enemyInThisCell)
 			{
-				DegradePiece();
-				_piecesManager.Enemies.Remove(enemyInThisCell);
-				Destroy(enemyInThisCell.gameObject);
+				if (DegradePiece() == 0)
+				{
+					_piecesManager.Enemies.Remove(enemyInThisCell);
+					Destroy(enemyInThisCell.gameObject);
+				}
+				else
+					this.gameObject.SetActive(false);
 			}
 
 			if (Input.GetMouseButtonDown(0) && !IsPointerOverGameObject())
@@ -287,7 +291,7 @@ public class PlayerMove : ChessPiece
 	public void UpgradePiece()
 	{
 		if ((int)CurrentType == 5)
-			CurrentType = (PieceType)0;
+		{ /* ничего не делать, выше ферзя не прыгаем */ } // CurrentType = (PieceType)0;
 		else
 			CurrentType++;
 

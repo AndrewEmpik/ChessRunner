@@ -118,7 +118,7 @@ public class Enemy : ChessPiece
 	IEnumerator BeatRushCoroutine()
 	{
 		Vector3 startPosition = transform.position;
-		Debug.Log("Старт корутины BeatRushCoroutine");
+		//Debug.Log("Старт корутины BeatRushCoroutine");
 
 		float strafeDuration = 0.12f;
 
@@ -133,7 +133,6 @@ public class Enemy : ChessPiece
 
 		if (_player.DegradePiece() == 0)
 		{
-			Debug.Log("_active не меняется, по-прежнему " + _active);
 			_piecesManager.Enemies.Remove(this);
 			Destroy(this.gameObject);
 		}

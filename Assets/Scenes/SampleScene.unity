@@ -4573,12 +4573,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Enemies: []
   _piecePrefabs:
+  - {fileID: -2938939843461818994, guid: d8614ed99afc02c4e890abe199d237d4, type: 3}
   - {fileID: -7648604867282416874, guid: ab3de3c446e8ae24d86399b6becdf7a2, type: 3}
   - {fileID: 3299139777213763107, guid: 012f1669976e7f549bf25de469730720, type: 3}
   - {fileID: 6642597830287612520, guid: b942445979487c24ab3e813e7769676d, type: 3}
   - {fileID: -8122210255665051052, guid: 764c512e36e656f449436ac706c32851, type: 3}
   - {fileID: -1486538145899016654, guid: e6788a1352258864dae1f9f18bb60180, type: 3}
-  - {fileID: -2938939843461818994, guid: d8614ed99afc02c4e890abe199d237d4, type: 3}
   _enemiesNumber: 12
 --- !u!4 &1726453147
 Transform:

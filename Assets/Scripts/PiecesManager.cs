@@ -19,7 +19,12 @@ public class PiecesManager : MonoBehaviour
 		for (int i = 0; i < _enemiesNumber; i++)
 		{
 			//Enemy E = new Enemy();
-			int _newTypeNumber = Random.Range(0, 6);
+			int _newTypeNumber;
+			if (i < _enemiesNumber - 1)
+				_newTypeNumber = Random.Range(1, 6);
+			else
+				_newTypeNumber = 0; // короля в конец
+
 			Enemies.Add(
 				Instantiate(
 					_piecePrefabs[_newTypeNumber], 
