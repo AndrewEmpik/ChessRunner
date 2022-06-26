@@ -14,6 +14,8 @@ public abstract class ChessPiece : MonoBehaviour
 		Queen
 	}
 
+	public int PieceCost = 1;
+
 	public PieceType CurrentType;
 
 	public List<Vector2Int> HitCursorPrototypes = new List<Vector2Int>();

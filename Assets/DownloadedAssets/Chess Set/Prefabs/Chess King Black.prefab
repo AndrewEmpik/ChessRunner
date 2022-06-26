@@ -96,6 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdbc059d4b916234e82dac92bc0e7c91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PieceCost: 10
   CurrentType: 0
   HitCursorPrototypes: []
   EnemyHitCursorPrefab: {fileID: 1342201990028587002, guid: d493de20bd8606d4788373e49ea4cb0b,
