@@ -33,10 +33,13 @@ public class Menu : MonoBehaviour
 		Music.enabled = GlobalManagement.MusicEnabled;
 		_musicCrossOut.SetActive(!GlobalManagement.MusicEnabled);
 
-		//if (GameObject.FindGameObjectsWithTag("Music").Length > 1)
-		//	Destroy(Music.gameObject);
+		if (GameObject.FindGameObjectsWithTag("Music").Length > 1)
+		{
+			Debug.Log("Больше");
+			Destroy(Music.gameObject);
+		}
 
-		//DontDestroyOnLoad(Music.gameObject);
+		DontDestroyOnLoad(Music.gameObject); 
 	}
 
 	public void OpenMenuWindow()
@@ -98,6 +101,7 @@ public class Menu : MonoBehaviour
 	public void ToggleMusic()
 	{
 		GlobalManagement.MusicEnabled = !GlobalManagement.MusicEnabled;
+		Music = GameObject.FindGameObjectsWithTag("Music")[0].GetComponent<AudioSource>();
 		Music.enabled = GlobalManagement.MusicEnabled;
 		_musicCrossOut.SetActive(!GlobalManagement.MusicEnabled);
 	}
