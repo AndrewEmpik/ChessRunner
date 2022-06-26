@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 3065463103161013444}
   - component: {fileID: 3094464261098965734}
   - component: {fileID: 3086432407460597566}
-  - component: {fileID: 3579345903946608259}
   m_Layer: 0
   m_Name: Chess Pawn Black
   m_TagString: Untagged
@@ -84,27 +83,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &3579345903946608259
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3064433526568930318}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bdbc059d4b916234e82dac92bc0e7c91, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CurrentType: 1
-  HitCursorPrototypes: []
-  EnemyHitCursorPrefab: {fileID: 1342201990028587002, guid: d493de20bd8606d4788373e49ea4cb0b,
-    type: 3}
-  EnemyHitCursorList: []
-  OnEnemyRush:
-    m_PersistentCalls:
-      m_Calls: []
-  IsInRush: 0
 --- !u!1 &6785816498327501783
 GameObject:
   m_ObjectHideFlags: 0
@@ -115,7 +93,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4948179995098500516}
   - component: {fileID: -3707262098487108953}
-  - component: {fileID: 942189358787782983}
   m_Layer: 0
   m_Name: Chess Pawn Black fixed
   m_TagString: Untagged
@@ -151,27 +128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdbc059d4b916234e82dac92bc0e7c91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentType: 1
-  HitCursorPrototypes: []
-  EnemyHitCursorPrefab: {fileID: 1342201990028587002, guid: d493de20bd8606d4788373e49ea4cb0b,
-    type: 3}
-  EnemyHitCursorList: []
-  OnEnemyRush:
-    m_PersistentCalls:
-      m_Calls: []
-  IsInRush: 0
---- !u!114 &942189358787782983
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6785816498327501783}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bdbc059d4b916234e82dac92bc0e7c91, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  PieceCost: 1
   CurrentType: 1
   HitCursorPrototypes: []
   EnemyHitCursorPrefab: {fileID: 1342201990028587002, guid: d493de20bd8606d4788373e49ea4cb0b,
