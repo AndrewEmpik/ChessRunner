@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Enemy : ChessPiece
 {
@@ -19,6 +20,11 @@ public class Enemy : ChessPiece
 
 	private bool _active = true;
 
+	public UnityEvent OnEnemyRush;
+	AudioManager _audioManager;
+
+	public bool IsInRush = false;
+
 	public override void Start()
     {
 		base.Start();
@@ -32,6 +38,9 @@ public class Enemy : ChessPiece
 
 		_player = FindObjectOfType<PlayerMove>(); // bad practice?
 		_piecesManager = FindObjectOfType<PiecesManager>(); // bad practice?
+
+		_audioManager = FindObjectOfType<AudioManager>();
+		OnEnemyRush.AddListener(_audioManager.PlayEnemyWhooshSound);
 	}
 
 	private void Update()
@@ -53,8 +62,11 @@ public class Enemy : ChessPiece
 				{
 					if (_player.PlayerCellAddress == _targetCellToAttack)
 					{
-						RushAtPlayer();
-						_active = false;
+						if (_player.FreeToAct) // то есть если он сам не в состоянии атаки
+						{
+							RushAtPlayer();
+							_active = false;
+						}
 					}
 					else // эх, улизнул
 						_playerDetected = false;
@@ -112,7 +124,9 @@ public class Enemy : ChessPiece
 
 	void RushAtPlayer()
 	{
+		OnEnemyRush.Invoke();
 		StartCoroutine(BeatRushCoroutine());
+		IsInRush = true;
 	}
 
 	IEnumerator BeatRushCoroutine()

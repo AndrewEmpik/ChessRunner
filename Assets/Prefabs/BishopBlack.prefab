@@ -303,6 +303,9 @@ MonoBehaviour:
   EnemyHitCursorPrefab: {fileID: 1342201990028587002, guid: d493de20bd8606d4788373e49ea4cb0b,
     type: 3}
   EnemyHitCursorList: []
+  OnEnemyRush:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5206528125222979134
 GameObject:
   m_ObjectHideFlags: 0

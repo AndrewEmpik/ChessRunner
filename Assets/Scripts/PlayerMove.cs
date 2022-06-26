@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 public class PlayerMove : ChessPiece
@@ -26,7 +27,7 @@ public class PlayerMove : ChessPiece
 	private Vector2 _startTapPosition;
 	private Vector2 _tapOffset;
 
-	bool _freeToAct = true;
+	public bool FreeToAct = true;
 
 	int _curPositionNumber = 0;
 
@@ -41,6 +42,9 @@ public class PlayerMove : ChessPiece
 	public Vector2Int PlayerCellAddress;
 
 	Management _management;
+
+	public UnityEvent OnPlayerRush;
+	public UnityEvent OnCrash;
 
 	public override void Start()
     {
@@ -81,11 +85,12 @@ public class PlayerMove : ChessPiece
 		// TODO оптимизировать, добавив событие смены €чейки
 		PlaceHitCursors();
 
-		if (_freeToAct)
+		if (FreeToAct)
 		{
 			Enemy enemyInThisCell = CheckIfInEnemyCell();
 			if (enemyInThisCell)
 			{
+				OnCrash.Invoke();
 				if (DegradePiece() == 0)
 				{
 					_piecesManager.Enemies.Remove(enemyInThisCell);
@@ -236,7 +241,7 @@ public class PlayerMove : ChessPiece
 				Vector2 EnemyCellAddress = GlobalManagement.GetCellAddressByPosition(_piecesManager.Enemies[j].transform.position);
 				//Debug.Log("Enemy:  " + EnemyCellAddress.x + ", " + EnemyCellAddress.y);
 				//Debug.Log("Player: " + PlayerCellAddress.x + ", " + PlayerCellAddress.y);
-				if (EnemyCellAddress == PlayerCellAddress)
+				if (EnemyCellAddress == PlayerCellAddress && !_piecesManager.Enemies[j].IsInRush)
 					return _piecesManager.Enemies[j];
 			}
 		}
@@ -334,12 +339,13 @@ public class PlayerMove : ChessPiece
 
 	void RushAtPosition(Enemy TargetEnemy)
 	{
+		OnPlayerRush.Invoke();
 		StartCoroutine(BeatRushCoroutine(TargetEnemy));
 	}
 
 	IEnumerator StrafeCoroutine(int newPositionNumber)
 	{
-		_freeToAct = false;
+		FreeToAct = false;
 		float startPosition = transform.position.x;
 		float endPosition = GetXByPositionNumber(newPositionNumber);
 
@@ -350,12 +356,12 @@ public class PlayerMove : ChessPiece
 		}
 		transform.position = new Vector3(endPosition, transform.position.y, transform.position.z);
 		_curPositionNumber = newPositionNumber;
-		_freeToAct = true;
+		FreeToAct = true;
 	}
 
 	IEnumerator BeatRushCoroutine(Enemy TargetEnemy)
 	{
-		_freeToAct = false;
+		FreeToAct = false;
 		Vector3 startPosition = transform.position;
 
 		for (float t = 0; t < _strafeDuration; t += Time.deltaTime * 1f)
@@ -373,7 +379,7 @@ public class PlayerMove : ChessPiece
 
 		UpgradePiece();
 
-		_freeToAct = true;
+		FreeToAct = true;
 	}
 
 	float GetXByPositionNumber(int positionNumber)
@@ -385,7 +391,7 @@ public class PlayerMove : ChessPiece
 	void Beat()
 	{
 		Enemy TargetEnemy = FindEnemyUnderCursors();
-		if (TargetEnemy)
+		if (TargetEnemy && !TargetEnemy.IsInRush)
 			RushAtPosition(TargetEnemy);
 	}
 

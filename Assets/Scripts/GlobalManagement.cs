@@ -10,7 +10,7 @@ public static class GlobalManagement
 	public static float CellSize = 1f;
 
 	public static bool FirstLoad = true;
-	public static bool MusicEnabled = false;//true;
+	public static bool MusicEnabled = true;
 	public static float Volume = 1.0f;
 
 	public static Vector2Int GetCellAddressByPosition(float x, float y)
