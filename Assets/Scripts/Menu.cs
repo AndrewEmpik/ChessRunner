@@ -31,7 +31,10 @@ public class Menu : MonoBehaviour
 		if (_menuIsActive)
 			OpenMenuWindow();
 		else
+		{
+			CloseMenuWindow();
 			Time.timeScale = 1f;
+		}
 
 		GlobalManagement.FirstLoad = false;
 
