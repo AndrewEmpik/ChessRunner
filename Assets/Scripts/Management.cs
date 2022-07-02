@@ -16,9 +16,13 @@ public class Management : MonoBehaviour
 	public int Score = 0;
 
 	[SerializeField] TMP_Text _scoreTextUI;
+	[SerializeField] TMP_Text _versionText;
+	[SerializeField] string _gameVersion = "1.xx";
 
 	void Start()
 	{
+		_versionText.text = "v " + _gameVersion;
+
 		style.fontSize = 32;
 		style.normal.textColor = Color.white;
 
@@ -35,9 +39,9 @@ public class Management : MonoBehaviour
 
 	void OnGUI()
 	{
-		//float newFPS = 1.0f / Time.smoothDeltaTime;
-		//_fps = 1.0f / Time.smoothDeltaTime;  //Mathf.Lerp(fps, newFPS, 0.0005f);
-		//GUI.Label(new Rect(10, 10, 100, 100), "FPS: " + ((int)_fps).ToString(), style);
+		float newFPS = 1.0f / Time.smoothDeltaTime;
+		_fps = 1.0f / Time.smoothDeltaTime;  //Mathf.Lerp(fps, newFPS, 0.0005f);
+		GUI.Label(new Rect(10, 10, 100, 100), "FPS: " + ((int)_fps).ToString(), style);
 	}
 
 	void Update()

@@ -16,6 +16,11 @@ public class Menu : MonoBehaviour
 
 	[SerializeField] GameObject _musicCrossOut;
 	[SerializeField] GameObject _helpWindow;
+	[SerializeField] GameObject _optionsWindow;
+
+	[SerializeField] GameObject _globalVolume;
+	[SerializeField] GameObject _globalLight;
+	//[SerializeField] GameObject _globalVolume;
 
 	public AudioSource Music;
 
@@ -78,6 +83,20 @@ public class Menu : MonoBehaviour
 		GameInProgress = !GameInProgress;
 	}
 
+	public void TogglePostEffects(bool value)
+	{
+		_globalVolume.SetActive(value);
+	}
+
+	public void ToggleShadows(bool value)
+	{
+		_globalLight.GetComponent<Light>().shadows = value ? LightShadows.Hard : LightShadows.None;
+	}
+
+	public void ToggleOcclusion(bool value)
+	{
+	}
+
 	private void Update()
 	{
 		if (Input.GetKeyDown(KeyCode.Escape))
@@ -88,6 +107,7 @@ public class Menu : MonoBehaviour
 				QuitGame();
 
 			_helpWindow.SetActive(false);
+			_optionsWindow.SetActive(false);
 		}
 	}
 
