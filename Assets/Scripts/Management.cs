@@ -17,11 +17,10 @@ public class Management : MonoBehaviour
 
 	[SerializeField] TMP_Text _scoreTextUI;
 	[SerializeField] TMP_Text _versionText;
-	[SerializeField] string _gameVersion = "1.xx";
 
 	void Start()
 	{
-		_versionText.text = "v " + _gameVersion;
+		_versionText.text = "v " + Application.version;
 
 		style.fontSize = 32;
 		style.normal.textColor = Color.white;
