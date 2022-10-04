@@ -264,7 +264,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 239.63165, y: -53.333332}
+  m_AnchoredPosition: {x: 273.6953, y: -53.333332}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &40536168
@@ -3790,7 +3790,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 239.63165, y: -386.66663}
+  m_AnchoredPosition: {x: 273.6953, y: -386.66663}
   m_SizeDelta: {x: 350, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &602139029
@@ -8253,7 +8253,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 239.63165, y: -200}
+  m_AnchoredPosition: {x: 273.6953, y: -200}
   m_SizeDelta: {x: 350, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1453617552
@@ -9358,7 +9358,6 @@ MonoBehaviour:
   Score: 0
   _scoreTextUI: {fileID: 357961380}
   _versionText: {fileID: 734590033}
-  _gameVersion: 1.02
 --- !u!1 &1692260502
 GameObject:
   m_ObjectHideFlags: 0
