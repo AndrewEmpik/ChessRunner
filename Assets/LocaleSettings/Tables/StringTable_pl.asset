@@ -1,0 +1,79 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: StringTable_pl
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: pl
+  m_SharedData: {fileID: 11400000, guid: 16d74254c15f2684c8abc6af8a457d4f, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 22828261376
+    m_Localized: "GRA\u0106!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4501187305472
+    m_Localized: Uruchom ponownie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4968625709056
+    m_Localized: Ustawienia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5525243404288
+    m_Localized: "Jak gra\u0107?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5644969811968
+    m_Localized: "Wyjd\u017A z gry"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 27149816537088
+    m_Localized: "Przesu\u0144 si\u0119 po ca\u0142ym polu szachowym, pokonaj figury
+      wroga, unikaj ich czerwonych znacznik\xF3w, ewoluuj i zbieraj punkty.\r\nA
+      za kr\xF3la na ko\u0144cu otrzymasz maksymaln\u0105 liczb\u0119 punkt\xF3w!\r\n\r\n<b>Przesu\u0144
+      w lewo-prawo</b> \u2014\r\nruch boczny.\r\n<b>Przesu\u0144 w g\xF3r\u0119</b>
+      \u2014\r\nzaatakuj kawa\u0142ek pod zielonym znacznikiem."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 33541180858368
+    m_Localized: Ok, wstecz
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35885696131072
+    m_Localized: Post efekty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35965576650752
+    m_Localized: Cienie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36348285919232
+    m_Localized: Wstecz
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37461278040064
+    m_Localized: "PRZEGRA\u0141E\u015A!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37484904554496
+    m_Localized: "WYGRA\u0141E\u015A!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37517565599744
+    m_Localized: 'Punkty:'
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

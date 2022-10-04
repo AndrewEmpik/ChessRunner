@@ -1,0 +1,81 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: StringTable Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: StringTable
+  m_TableCollectionNameGuidString: 16d74254c15f2684c8abc6af8a457d4f
+  m_Entries:
+  - m_Id: 22828261376
+    m_Key: key_play
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4501187305472
+    m_Key: key_restart
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4968625709056
+    m_Key: key_options
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5525243404288
+    m_Key: key_howToPlay
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5644969811968
+    m_Key: key_quit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 27149816537088
+    m_Key: key_helpText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 33541180858368
+    m_Key: key_okBack
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35885696131072
+    m_Key: key_postEffects
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35965576650752
+    m_Key: key_shadows
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36348285919232
+    m_Key: key_back
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37461278040064
+    m_Key: key_lose
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37484904554496
+    m_Key: key_win
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37517565599744
+    m_Key: key_score
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 3138509857569898527
+  references:
+    version: 2
+    RefIds:
+    - rid: 3138509857569898527
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables,
+        asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1664863720777
