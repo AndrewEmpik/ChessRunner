@@ -14,7 +14,6 @@ public class PiecesManager : MonoBehaviour
 
 	void Start()
     {
-
 		_management = FindObjectOfType<Management>();
 
 		for (int i = 0; i < _enemiesNumber; i++)
@@ -24,7 +23,7 @@ public class PiecesManager : MonoBehaviour
 			if (i < _enemiesNumber - 1)
 				_newTypeNumber = Random.Range(1, 6);
 			else
-				_newTypeNumber = 0; // короля в конец
+				_newTypeNumber = 0; // put the king to the end
 
 			Enemies.Add(
 				Instantiate(

@@ -56,19 +56,19 @@ public class Enemy : ChessPiece
 					_targetCellToAttack = _cellPlayerDetectedAt + Vector2Int.up;
 				}
 			}
-			else // следим за игроком
+			else // watching the player
 			{
 				if (_player.PlayerCellAddress != _cellPlayerDetectedAt)
 				{
 					if (_player.PlayerCellAddress == _targetCellToAttack)
 					{
-						if (_player.FreeToAct) // то есть если он сам не в состоянии атаки
+						if (_player.FreeToAct) // means if he himself is not in the attack state
 						{
 							RushAtPlayer();
 							_active = false;
 						}
 					}
-					else // эх, улизнул
+					else //  uh, he slipped away
 						_playerDetected = false;
 				}
 			}
@@ -82,7 +82,7 @@ public class Enemy : ChessPiece
 
 		for (int i = 0; i < EnemyHitCursorList.Count; i++)
 		{
-			newHitCursorCoords = _unitCellAddress + HitCursorPrototypes[i] * new Vector2Int(1,-1); // * -1 по y
+			newHitCursorCoords = _unitCellAddress + HitCursorPrototypes[i] * new Vector2Int(1,-1); // * -1 at y axis
 
 			//Debug.Log(newHitCursorCoords.x + ", " + newHitCursorCoords.y + " (" + GlobalManagement.PathRadius + ")");
 
@@ -113,7 +113,7 @@ public class Enemy : ChessPiece
 		{
 			for (int i = 0; i < EnemyHitCursorList.Count; i++)
 			{
-				// TODO запоминать CellAddress ещё раньше, чтобы не пересчитывать каждый раз
+				// TODO remember CellAddress even earlier, not to recalculate each time
 				if (GlobalManagement.GetCellAddressByPosition(	EnemyHitCursorList[i].transform.position.x, 
 																EnemyHitCursorList[i].transform.position.z	) == _player.PlayerCellAddress)
 					return true;
@@ -132,11 +132,11 @@ public class Enemy : ChessPiece
 	IEnumerator BeatRushCoroutine()
 	{
 		Vector3 startPosition = transform.position;
-		//Debug.Log("Старт корутины BeatRushCoroutine");
+		//Debug.Log("Start of the coroutine BeatRushCoroutine");
 
 		float strafeDuration = 0.12f;
 
-		// тут TODO strafeDuration прописать в переменную
+		// here TODO write strafeDuration into a variable
 		for (float t = 0; t < strafeDuration; t += Time.deltaTime * 1f)
 		{
 			transform.position = new Vector3(Mathf.Lerp(startPosition.x, _player.transform.position.x, t / strafeDuration),

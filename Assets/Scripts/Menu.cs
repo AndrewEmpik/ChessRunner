@@ -20,8 +20,7 @@ public class Menu : MonoBehaviour
 
 	[SerializeField] GameObject _globalVolume;
 	[SerializeField] GameObject _globalLight;
-	//[SerializeField] GameObject _globalVolume;
-
+	
 	public AudioSource Music;
 
 	private void Start()
@@ -43,7 +42,7 @@ public class Menu : MonoBehaviour
 
 		if (GameObject.FindGameObjectsWithTag("Music").Length > 1)
 		{
-			Debug.Log("Больше");
+			//Debug.Log("More");
 			Destroy(Music.gameObject);
 		}
 
@@ -98,6 +97,7 @@ public class Menu : MonoBehaviour
 
 	public void ToggleOcclusion(bool value)
 	{
+		// TODO
 	}
 
 	private void Update()

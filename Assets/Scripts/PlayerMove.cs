@@ -8,7 +8,7 @@ public class PlayerMove : ChessPiece
 {
 	int _screenSizeX;
 	int _screenCenterX;
-	const int _targetScreenSizeX = 1080; // константа дл€ пропорций
+	const int _targetScreenSizeX = 1080; // the constant for proportions
 	float _screenCoefficient;
 	//int _screenSizeY;
 	public float Speed = 10f;
@@ -73,6 +73,7 @@ public class PlayerMove : ChessPiece
 
 	void OnGUI()
 	{
+		// this used to be needed for debug
 		//Vector2Int cell = GlobalManagement.GetCellAddressByPosition(transform.position.x, transform.position.z);
 		//GUI.Label(new Rect(_screenCenterX, 10, 100, 100), "dbg: " + _tapOffset.magnitude.ToString() + " (" + _thresholdForShortTap.ToString("0") + ")" + "\n" +
 		//													"cell: " + cell.x + "," + cell.y, style);
@@ -83,7 +84,7 @@ public class PlayerMove : ChessPiece
 		transform.position += Vector3.forward * Speed * Time.deltaTime;
 
 		PlayerCellAddress = GlobalManagement.GetCellAddressByPosition(transform.position.x, transform.position.z);
-		// TODO оптимизировать, добавив событие смены €чейки
+		// TODO optimize it by adding the event of cell changing
 		PlaceHitCursors();
 
 		if (FreeToAct)
@@ -110,7 +111,7 @@ public class PlayerMove : ChessPiece
 			{
 				_tapOffset = (Vector2)Input.mousePosition - _startTapPosition;
 
-				// если короткое нажатие
+				// if the short tap
 				if (_tapOffset.magnitude <= _thresholdForShortTap)
 				{
 					if (Input.mousePosition.x >= _screenCenterX)
@@ -118,7 +119,7 @@ public class PlayerMove : ChessPiece
 					else
 						StrafeLeft();
 				}
-				else // если свайп
+				else // if swipe
 				{
 					if (Mathf.Abs(_tapOffset.x) >= Mathf.Abs(_tapOffset.y))
 					{
@@ -294,7 +295,7 @@ public class PlayerMove : ChessPiece
 	public void UpgradePiece()
 	{
 		if ((int)CurrentType == 5)
-		{ /* ничего не делать, выше ферз€ не прыгаем */ } // CurrentType = (PieceType)0;
+		{ /* do nothing, because we do not jump higher than the queen is */ } // CurrentType = (PieceType)0;
 		else
 			CurrentType++;
 
@@ -321,7 +322,7 @@ public class PlayerMove : ChessPiece
 	{
 		if (_curPositionNumber >= 2)
 		{
-			return; // можно в будущем сделать сход с трассы
+			return; // we may add an off-track exit in the future
 		}
 		StartCoroutine(StrafeCoroutine(_curPositionNumber + 1));
 	}
@@ -330,7 +331,7 @@ public class PlayerMove : ChessPiece
 	{
 		if (_curPositionNumber <= -2)
 		{
-			return; // можно в будущем сделать сход с трассы
+			return; // we may add an off-track exit in the future
 		}
 		StartCoroutine(StrafeCoroutine(_curPositionNumber - 1));
 	}

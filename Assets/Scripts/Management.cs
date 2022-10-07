@@ -18,6 +18,8 @@ public class Management : MonoBehaviour
 	[SerializeField] TMP_Text _scoreTextUI;
 	[SerializeField] TMP_Text _versionText;
 
+	private bool _win = false;
+
 	void Start()
 	{
 		_versionText.text = "v " + Application.version;
@@ -43,13 +45,11 @@ public class Management : MonoBehaviour
 		GUI.Label(new Rect(10, 10, 100, 100), "FPS: " + ((int)_fps).ToString(), style);
 	}
 
-	void Update()
-	{
+	//void Update()
+	//{
 		//if (Input.GetKey(KeyCode.Escape))
 		//	GlobalManagement.QuitGame();
-	}
-
-	private bool _win = false;
+	//}
 
 	public void Win()
 	{

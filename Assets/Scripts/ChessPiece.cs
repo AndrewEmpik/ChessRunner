@@ -6,7 +6,7 @@ public abstract class ChessPiece : MonoBehaviour
 {
 	public enum PieceType
 	{
-		King, // он самый первый для технического удобства
+		King, // very first just for technical convenience
 		Pawn,
 		Knight,
 		Bishop,

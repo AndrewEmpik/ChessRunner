@@ -5,8 +5,8 @@ using UnityEngine;
 public static class GlobalManagement
 {
 	public static Vector2 WorldZeroPoint = Vector2.zero;
-	public static int PathWidthInCells = 5; // пока не меняем
-	public static int PathRadius = (PathWidthInCells - 1) / 2; // считаем, что PathWidthInCells нечётный
+	public static int PathWidthInCells = 5; // we don't change this for now
+	public static int PathRadius = (PathWidthInCells - 1) / 2; // we assume that PathWidthInCells is odd
 	public static float CellSize = 1f;
 
 	public static bool FirstLoad = true;
